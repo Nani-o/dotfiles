@@ -1,0 +1,5 @@
+set tabsize 4
+set tabstospaces
+set constantshow
+
+include /usr/share/nano-syntax-highlighting/*.nanorc
