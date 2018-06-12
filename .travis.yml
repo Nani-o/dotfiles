@@ -1,0 +1,24 @@
+---
+dist: trusty
+language: python
+python: "2.7"
+
+sudo: false
+
+addons:
+  apt:
+    update: true
+    packages:
+      - shellcheck
+
+script:
+  # Run shellcheck on my shell functions file
+  - echo "shellcheck on .shfuncs"
+  - shellcheck .shfuncs
+  # Search tabulation
+  - echo "searching tabulations"
+  - ! grep -nP "\t" .*
+  # Search trailing whitespaces
+  - echo "searching trailing whitespaces
+  - ! grep -nP " $" .*
+
