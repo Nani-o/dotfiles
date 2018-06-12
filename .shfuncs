@@ -48,6 +48,6 @@ function rescan_disks {
 
 # Travis
 
-function travisallstatus {
-    travis repos -a | grep Nani-o | awk '{print $1}' | xargs -L 1 -P 10 -I {} sh -c 'printf "%-35s%s\n" "{}" "$(travis history -i --limit 1 -r {})"'
+function travis_overview {
+    travis repos -a | grep '/' | awk '{print $1}' | xargs -L 1 -P 10 -I {} sh -c 'printf "%-28s%s\n" "$(echo {} | cut -d / -f 2)" "$(travis history -i --limit 1 -r {})"'
 } 
