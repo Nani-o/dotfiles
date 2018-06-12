@@ -17,7 +17,7 @@ script:
   - shellcheck .shfuncs
   # Search tabulation
   - echo "searching tabulations"
-  - \! find . -type f -name '.*' | xargs grep -nP "\t"
+  - bash -c '! find . -type f -name ".*" | xargs grep -nP "\t"'
   # Search trailing whitespaces
   - echo "searching trailing whitespaces"
-  - \! find . -type f -name '.*' | xargs grep -nP " $"
+  - bash -c '! find . -type f -name ".*" | xargs grep -nP " $"'
