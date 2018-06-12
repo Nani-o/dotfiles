@@ -1,0 +1,38 @@
+# A collection of shell functions
+
+# Wrapper for retrying command until it works
+
+function retry {
+    while true; do
+        $@ && break
+        sleep 1
+    done
+}
+
+# List crontabs for all user
+
+function cron_all_users {
+    for user in $(cut -f1 -d: /etc/passwd); do
+        sudo crontab -u $user -l
+    done
+}
+
+# Scanning new or expanded disks in a VM
+
+function scan_new_disk {
+    for scsi_host in $(ls /sys/class/scsi_host/); do
+        sudo bash -c "echo '- - -' > /sys/class/scsi_host/${scsi_host}/scan"
+    done
+}
+
+function rescan_disks {
+    for scsi_device in $(ls /sys/class/scsi_device/); do
+        sudo bash -c "echo 1 > /sys/class/scsi_device/${scsi_device}/device/rescan"
+    done
+}
+
+# Travis
+
+function travisallstatus {
+    travis repos -a | grep Nani-o | awk '{print $1}' | xargs -L 1 -P 10 -I {} sh -c 'printf "%-35s%s\n" "{}" "$(travis history -i --limit 1 -r {})"'
+} 
