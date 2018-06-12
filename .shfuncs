@@ -15,6 +15,20 @@ function git_pull_then_playbook {
   done
 }
 
+# Wrapper for reloading a screen with a command at any hit key
+
+function press_to_reload {
+    [[ -z "$@" ]] && echo "Usage: press_to_reload [COMMAND]" && return
+    while true; do
+        clear
+        echo "Executing : $*"
+        "$@"
+        echo -e "\n${txtbold}${txtgreen}Press any key to reload,${txtred} q for exiting${txtnormal}"
+        [[ -n "${ZSH_VERSION}" ]] && read -k 1 "KEY_PRESSED" || read -n 1 "KEY_PRESSED"
+        [[ "${KEY_PRESSED}" == "q" || "${KEY_PRESSED}" == "Q" ]] && return
+    done
+}
+
 # Wrapper for retrying command until it works
 
 function retry {
@@ -51,3 +65,21 @@ function rescan_disks {
 function travis_overview {
     travis repos -a | grep '/' | awk '{print $1}' | xargs -L 1 -P 10 -I {} sh -c 'printf "%-28s%s\n" "$(echo {} | cut -d / -f 2)" "$(travis history -i --limit 1 -r {})"'
 } 
+
+# ANSI Escape sequence for color stored as variables with tput
+
+txtblack=$(tput setaf 0)
+txtred=$(tput setaf 1)
+txtgreen=$(tput setaf 2)
+txtlime_yellow=$(tput setaf 190)
+txtyellow=$(tput setaf 3)
+txtpowder_blue=$(tput setaf 153)
+txtblue=$(tput setaf 4)
+txtmagenta=$(tput setaf 5)
+txtcyan=$(tput setaf 6)
+txtwhite=$(tput setaf 7)
+txtblink=$(tput blink)
+txtreverse=$(tput smso)
+txtbold=$(tput bold)
+txtunderline=$(tput smul)
+txtnormal=$(tput sgr0)
