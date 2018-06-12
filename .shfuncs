@@ -1,5 +1,20 @@
 # A collection of shell functions
 
+# Event then action
+
+function git_pull_then_playbook {
+  clear
+  while true
+  do
+    pull=$(git -C $1 pull)
+    echo "$pull" | grep -q 'Already up-to-date'
+    if [[ "$?" == 1 ]]; then
+      clear
+      ansible-playbook $2
+    fi
+  done
+}
+
 # Wrapper for retrying command until it works
 
 function retry {
