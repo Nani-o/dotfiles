@@ -13,15 +13,15 @@ addons:
 
 script:
   # Run shellcheck on my shell functions file
-  - echo -en 'travis_fold:start:shellcheck\rshellcheck'
+  - echo 'Running shellcheck on .funcs.sh' && echo -en 'travis_fold:start:shellcheck\r'
   - shellcheck --version
   - shellcheck -s bash -e SC2034 .funcs.sh
   - echo -en 'travis_fold:end:shellcheck\r'
   # Search tabulations
-  - echo -en 'travis_fold:start:tabulations\rsearch tabulations'
+  - echo 'Searching tabulations :' && echo -en 'travis_fold:start:tabs\r'
   - bash -c '! find . -type f -name ".*" | xargs grep -nP "\t"'
-  - echo -en 'travis_fold:end:tabulations\r'
+  - echo -en 'travis_fold:end:tabs\r'
   # Search trailing whitespaces
-  - echo -en 'travis_fold:start:trailing_whitespaces\rsearch whitespaces'
+  - echo 'Searching whitespaces :' && echo -en 'travis_fold:start:whitespaces\r'
   - bash -c '! find . -type f -name ".*" | xargs grep -nP " $"'
-  - echo -en 'travis_fold:end:trailing_whitespaces\r'
+  - echo -en 'travis_fold:end:whitespaces\r'
