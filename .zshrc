@@ -38,4 +38,4 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
-source ~/.shfuncs
+source ~/.funcs.sh

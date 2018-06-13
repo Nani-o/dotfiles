@@ -14,7 +14,7 @@ addons:
 script:
   # Run shellcheck on my shell functions file
   - echo "shellcheck on .shfuncs"
-  - shellcheck .shfuncs
+  - shellcheck -s bash -e SC2034 .funcs.sh
   # Search tabulation
   - echo "searching tabulations"
   - bash -c '! find . -type f -name ".*" | xargs grep -nP "\t"'

@@ -1,4 +1,4 @@
 # KeyBindings
 bind status a !git commit --amend
 bind status p !git push
-bind status + !git pull --rebase 
+bind status + !git pull --rebase

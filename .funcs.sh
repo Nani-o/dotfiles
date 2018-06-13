@@ -6,11 +6,11 @@ function git_pull_then_playbook {
   clear
   while true
   do
-    pull=$(git -C $1 pull)
-    echo "$pull" | grep -q 'Already up-to-date'
+    pull=$(git -C "${1}" pull)
+    echo "${pull}" | grep -q 'Already up-to-date'
     if [[ "$?" == 1 ]]; then
       clear
-      ansible-playbook $2
+      ansible-playbook "${2}"
     fi
   done
 }
@@ -18,22 +18,31 @@ function git_pull_then_playbook {
 # Wrapper for reloading a screen with a command at any hit key
 
 function press_to_reload {
-    [[ -z "$@" ]] && echo "Usage: press_to_reload [COMMAND]" && return
-    while true; do
-        clear
-        echo "Executing : $*"
-        "$@"
-        echo -e "\n${txtbold}${txtgreen}Press any key to reload,${txtred} q for exiting${txtnormal}"
-        [[ -n "${ZSH_VERSION}" ]] && read -k 1 "KEY_PRESSED" || read -n 1 "KEY_PRESSED"
-        [[ "${KEY_PRESSED}" == "q" || "${KEY_PRESSED}" == "Q" ]] && return
+    [[ -z "$@" ]] && echo "Usage: press_to_reload [-t auto_reload] command" && return
+    [[ "${1}" == "-t" ]] && AUTO_RELOAD="${2}" && shift 2 || AUTO_RELOAD=3600
+    [[ -n "${ZSH_VERSION}" ]] && READ_ARGS="-k" || READ_ARGS="-n"
+    local KEY_PRESSED
+
+    press_to_reload_runner "$@"
+    while read -s -r "${READ_ARGS}" 1 -t "${AUTO_RELOAD}" "KEY_PRESSED" || :; do
+        [[ "${KEY_PRESSED}" == "q" || "${KEY_PRESSED}" == "Q" ]] && break
+        press_to_reload_runner "$@"
     done
+}
+
+function press_to_reload_runner {
+    clear
+    echo "run : $* | auto_reload : ${AUTO_RELOAD}"
+    "$@"
+    echo -e "\n${txtbold}${txtgreen}Press any key to reload,${txtred} q for exiting${txtnormal}"
 }
 
 # Wrapper for retrying command until it works
 
 function retry {
+    [[ -z "${@}" ]] && echo "Usage: retry command" && return
     while true; do
-        $@ && break
+        "${@}" && break
         sleep 1
     done
 }
@@ -41,21 +50,21 @@ function retry {
 # List crontabs for all user
 
 function cron_all_users {
-    for user in $(cut -f1 -d: /etc/passwd); do
-        sudo crontab -u $user -l
-    done
+    while read -r cron_user; do
+        sudo crontab -u "${cron_user}" -l
+    done <<< "$(cut -f1 -d: /etc/passwd)"
 }
 
 # Scanning new or expanded disks in a VM
 
 function scan_new_disk {
-    for scsi_host in $(ls /sys/class/scsi_host/); do
+    for scsi_host in /sys/class/scsi_host/*; do
         sudo bash -c "echo '- - -' > /sys/class/scsi_host/${scsi_host}/scan"
     done
 }
 
 function rescan_disks {
-    for scsi_device in $(ls /sys/class/scsi_device/); do
+    for scsi_device in /sys/class/scsi_device/*; do
         sudo bash -c "echo 1 > /sys/class/scsi_device/${scsi_device}/device/rescan"
     done
 }
@@ -63,8 +72,9 @@ function rescan_disks {
 # Travis
 
 function travis_overview {
+    # shellcheck disable=SC2016
     travis repos -a | grep '/' | awk '{print $1}' | xargs -L 1 -P 10 -I {} sh -c 'printf "%-28s%s\n" "$(echo {} | cut -d / -f 2)" "$(travis history -i --limit 1 -r {})"'
-} 
+}
 
 # ANSI Escape sequence for color stored as variables with tput
 
