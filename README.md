@@ -18,9 +18,9 @@ I use an ansible [role](https://github.com/Nani-o/ansible-role-dotfiles) for dep
 For example if your dotfiles is cloned in **~/dotfiles**, you can run :
 
 ```Shell
-find dotfiles/ -maxdepth 1 -type f \( -iname '.*' ! -iname '.travis.yml' \) \
+find ~/dotfiles/ -maxdepth 1 -type f \( -iname '.*' ! -iname '.travis.yml' \) \
     | xargs readlink -f \
-    | xargs -L 1 -I {} echo ln -s "{}" "${HOME}"
+    | xargs -L 1 -I {} echo ln -s "{}" "${HOME}/"
 ```
 
 It will just output the **ln -s** commands, copy paste them or remove the echo to make actual symlinks.
