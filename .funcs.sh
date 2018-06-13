@@ -72,8 +72,16 @@ function rescan_disks {
 # Travis
 
 function travis_overview {
+    local GREP_PATTERN
+    for item in "$@"; do
+        GREP_PATTERN="${GREP_PATTERN}${item}|"
+    done
+    GREP_PATTERN="${GREP_PATTERN%?}"
+    GREP_PATTERN="${GREP_PATTERN:-*}"
+
     # shellcheck disable=SC2016
-    travis repos -a | grep '/' | awk '{print $1}' | xargs -L 1 -P 10 -I {} sh -c 'printf "%-28s%s\n" "$(echo {} | cut -d / -f 2)" "$(travis history -i --limit 1 -r {})"'
+    travis repos -a | grep '/' | awk '{print $1}' | grep -Ei "${GREP_PATTERN}" \
+        | xargs -L 1 -P 10 -I {} sh -c 'printf "%-28s%s\n" "$(echo {} | cut -d / -f 2)" "$(travis history -i --limit 1 -r {})"'
 }
 
 # ANSI Escape sequence for color stored as variables with tput
@@ -93,3 +101,6 @@ txtreverse=$(tput smso)
 txtbold=$(tput bold)
 txtunderline=$(tput smul)
 txtnormal=$(tput sgr0)
+
+# Some aliases for funcs
+alias rto='press_to_reload -t 300 travis_overview'
