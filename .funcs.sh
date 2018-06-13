@@ -18,7 +18,7 @@ function git_pull_then_playbook {
 # Wrapper for reloading a screen with a command at any hit key
 
 function press_to_reload {
-    [[ -z "$@" ]] && echo "Usage: press_to_reload [-t auto_reload] command" && return
+    [[ -z "${1}" ]] && echo "Usage: press_to_reload [-t auto_reload] command" && return
     [[ "${1}" == "-t" ]] && AUTO_RELOAD="${2}" && shift 2 || AUTO_RELOAD=3600
     [[ -n "${ZSH_VERSION}" ]] && READ_ARGS="-k" || READ_ARGS="-n"
     local KEY_PRESSED
@@ -40,7 +40,7 @@ function press_to_reload_runner {
 # Wrapper for retrying command until it works
 
 function retry {
-    [[ -z "${@}" ]] && echo "Usage: retry command" && return
+    [[ -z "${1}" ]] && echo "Usage: retry command" && return
     while true; do
         "${@}" && break
         sleep 1
