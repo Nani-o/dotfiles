@@ -13,9 +13,15 @@ addons:
 
 script:
   # Run shellcheck on my shell functions file
+  - echo -en 'travis_fold:start:shellcheck\\r'
   - shellcheck --version
   - shellcheck -s bash -e SC2034 .funcs.sh
-  # Search tabulation
+  - echo -en 'travis_fold:end:shellcheck\\r'
+  # Search tabulations
+  - echo -en 'travis_fold:start:tabulations\\r'
   - bash -c '! find . -type f -name ".*" | xargs grep -nP "\t"'
+  - echo -en 'travis_fold:end:tabulations\\r'
   # Search trailing whitespaces
+  - echo -en 'travis_fold:start:trailing_whitespaces\\r'
   - bash -c '! find . -type f -name ".*" | xargs grep -nP " $"'
+  - echo -en 'travis_fold:end:trailing_whitespaces\\r'
