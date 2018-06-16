@@ -34,7 +34,7 @@ function press_to_reload_runner {
     clear
     echo "run : $* | auto_reload : ${AUTO_RELOAD}"
     "$@"
-    echo -e "\n${txtbold}${txtgreen}Press any key to reload,${txtred} q for exiting${txtnormal}"
+    echo -e "\n${TXTBOLD}${TXTGREEN}Press any key to reload,${TXTRED} q for exiting${TXTNORMAL}"
 }
 
 # Wrapper for retrying command until it works
@@ -88,39 +88,40 @@ function travis_overview {
 # inspired by https://linuxtidbits.wordpress.com/2008/08/11/output-color-on-bash-scripts/
 
 function tput_colors {
-    printf "$(tput bold)%-10s%-10s%-10s%-10s$(tput sgr0)\n" regular bold underline tput-command-colors
-    for i in $(seq 1 7); do
-        local REG="$(tput setaf $i)%-10s$(tput sgr0)"
-        local BLD="$(tput bold)$(tput setaf $i)%-10s$(tput sgr0)"
-        local UND="$(tput smul)$(tput setaf $i)%s$(tput sgr0)"
-        local CMD="%21s"
-        printf "${REG}${BLD}${UND}${CMD}\n" "Text" "Text" "Text" "\$(tput setaf $i)"
+    local REG CMD LBL TPT
+    printf "%s%-10s%-10s%-10s%-10s%s\n" "${TXTBOLD}" regular bold underline tput-command-colors "${TXTNORMAL}"
 
+    for i in $(seq 1 7); do
+        REG="$(tput setaf "${i}")"
+        CMD="\$(tput setaf ${i})"
+        printf "%s%-10s%s" "${REG}" "Text" "${TXTNORMAL}"
+        printf "%s%s%-10s%s" "${REG}" "${TXTBOLD}" "Text" "${TXTNORMAL}"
+        printf "%s%s%s%s" "${REG}" "${TXTUNDERLINE}" "Text" "${TXTNORMAL}"
+        printf "%21s\n" "${CMD}"
     done
     for item in "Bold:bold" "Underline:smul" "Reset:sgr0"; do
-        local LBL="$(echo ${item} | cut -d ':' -f1)"
-        local TPT="$(echo ${item} | cut -d ':' -f2)"
+        LBL="$(echo ${item} | cut -d ':' -f1)"
+        TPT="$(echo ${item} | cut -d ':' -f2)"
         printf "%-30s%s\n" "${LBL}" "\$(tput ${TPT})"
     done
 }
 
 # ANSI Escape sequence for color stored as variables with tput
-
-txtblack=$(tput setaf 0)
-txtred=$(tput setaf 1)
-txtgreen=$(tput setaf 2)
-txtlime_yellow=$(tput setaf 190)
-txtyellow=$(tput setaf 3)
-txtpowder_blue=$(tput setaf 153)
-txtblue=$(tput setaf 4)
-txtmagenta=$(tput setaf 5)
-txtcyan=$(tput setaf 6)
-txtwhite=$(tput setaf 7)
-txtblink=$(tput blink)
-txtreverse=$(tput smso)
-txtbold=$(tput bold)
-txtunderline=$(tput smul)
-txtnormal=$(tput sgr0)
+TXTBLACK=$(tput setaf 0)
+TXTRED=$(tput setaf 1)
+TXTGREEN=$(tput setaf 2)
+TXTLIME_YELLOW=$(tput setaf 190)
+TXTYELLOW=$(tput setaf 3)
+TXTPOWDER_BLUE=$(tput setaf 153)
+TXTBLUE=$(tput setaf 4)
+TXTMAGENTA=$(tput setaf 5)
+TXTCYAN=$(tput setaf 6)
+TXTWHITE=$(tput setaf 7)
+TXTBLINK=$(tput blink)
+TXTREVERSE=$(tput smso)
+TXTBOLD=$(tput bold)
+TXTUNDERLINE=$(tput smul)
+TXTNORMAL=$(tput sgr0)
 
 # Some aliases for funcs
 alias rto='press_to_reload -t 300 travis_overview'
