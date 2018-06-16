@@ -84,6 +84,26 @@ function travis_overview {
         | xargs -L 1 -P 10 -I {} sh -c 'printf "%-28s%s\n" "$(echo {} | cut -d / -f 2)" "$(travis history -i --limit 1 -r {})"'
 }
 
+# Chart for tput colors
+# inspired by https://linuxtidbits.wordpress.com/2008/08/11/output-color-on-bash-scripts/
+
+function tput_colors {
+    printf "$(tput bold)%-10s%-10s%-10s%-10s$(tput sgr0)\n" regular bold underline tput-command-colors
+    for i in $(seq 1 7); do
+        local REG="$(tput setaf $i)%-10s$(tput sgr0)"
+        local BLD="$(tput bold)$(tput setaf $i)%-10s$(tput sgr0)"
+        local UND="$(tput smul)$(tput setaf $i)%s$(tput sgr0)"
+        local CMD="%21s"
+        printf "${REG}${BLD}${UND}${CMD}\n" "Text" "Text" "Text" "\$(tput setaf $i)"
+
+    done
+    for item in "Bold:bold" "Underline:smul" "Reset:sgr0"; do
+        local LBL="$(echo ${item} | cut -d ':' -f1)"
+        local TPT="$(echo ${item} | cut -d ':' -f2)"
+        printf "%-30s%s\n" "${LBL}" "\$(tput ${TPT})"
+    done
+}
+
 # ANSI Escape sequence for color stored as variables with tput
 
 txtblack=$(tput setaf 0)
