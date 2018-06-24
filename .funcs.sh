@@ -69,6 +69,23 @@ function rescan_disks {
     done
 }
 
+# Ansible shortcuts
+
+function ansible_role {
+    ansible_role="${1}"
+    ansible_target="${2}"
+    shift 2
+    temp_playbook=$(mktemp -p /tmp --suffix '.yml')
+cat > "${temp_playbook}" <<- EOM
+---
+- hosts: ${ansible_target}
+  roles:
+    - ${ansible_role}
+EOM
+    ansible-playbook "${temp_playbook}" "${@}"
+    rm -rf "${temp_playbook}"
+}
+
 # Travis
 
 function travis_overview {
