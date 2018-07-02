@@ -42,3 +42,4 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 source ~/.funcs.sh
+[[ -f ~/.extras.sh ]] && source ~/.extras.sh
