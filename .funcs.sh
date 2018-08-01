@@ -108,8 +108,10 @@ function screen_ctl {
     screen_name="${1}" && shift
     if [[ "${action}" == "connect" ]]
     then
-        screen -rd "${screen_name}"
-        [[ "${?}" != 0 ]] && screen -S "${screen_name}"
+        if ! screen -rd "${screen_name}"
+        then
+            screen -S "${screen_name}"
+        fi
     elif [[ "${action}" == "cmd" ]]
     then
         cmd="${*}\n"
