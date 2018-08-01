@@ -101,6 +101,31 @@ function travis_overview {
         | xargs -L 1 -P 10 -I {} sh -c 'printf "%-28s%s\n" "$(echo {} | cut -d / -f 2)" "$(travis history -i --limit 1 -r {})"'
 }
 
+# Screen
+
+function screen_ctl {
+    action="${1}" && shift
+    screen_name="${1}" && shift
+    if [[ "${action}" == "connect" ]]
+    then
+        screen -rd ${screen_name}
+        [[ "${?}" != 0 ]] && screen -S ${screen_name}
+    elif [[ "${action}" == "cmd" ]]
+    then
+        cmd="${@}\n"
+        screen -S ${screen_name} -X stuff "${cmd}"
+    fi
+}
+
+function device_as_screen {
+    device_name="${1}" && shift
+    [[ "${1}" == "connect" ]] && screen_ctl connect ${device_name} && return
+    screen_ctl cmd ${device_name} "${@}"
+}
+
+alias iphone='device_as_screen iphone'
+alias ipad='device_as_screen ipad'
+
 # Chart for tput colors
 # inspired by https://linuxtidbits.wordpress.com/2008/08/11/output-color-on-bash-scripts/
 
