@@ -108,19 +108,21 @@ function screen_ctl {
     screen_name="${1}" && shift
     if [[ "${action}" == "connect" ]]
     then
-        screen -rd ${screen_name}
-        [[ "${?}" != 0 ]] && screen -S ${screen_name}
+        if ! screen -rd "${screen_name}"
+        then
+            screen -S "${screen_name}"
+        fi
     elif [[ "${action}" == "cmd" ]]
     then
-        cmd="${@}\n"
-        screen -S ${screen_name} -X stuff "${cmd}"
+        cmd="${*}\n"
+        screen -S "${screen_name}" -X stuff "${cmd}"
     fi
 }
 
 function device_as_screen {
     device_name="${1}" && shift
-    [[ "${1}" == "connect" ]] && screen_ctl connect ${device_name} && return
-    screen_ctl cmd ${device_name} "${@}"
+    [[ "${1}" == "connect" ]] && screen_ctl connect "${device_name}" && return
+    screen_ctl cmd "${device_name}" "${@}"
 }
 
 alias iphone='device_as_screen iphone'
