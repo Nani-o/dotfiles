@@ -167,3 +167,4 @@ TXTNORMAL=$(tput sgr0)
 
 # Some aliases for funcs
 alias rto='press_to_reload -t 300 travis_overview'
+alias lg='lazygit'
