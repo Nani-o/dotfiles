@@ -1,0 +1,11 @@
+gui:
+  scrollheight: 2
+  theme:
+    activebordercolor:
+    - blue
+    - bold
+    inactivebordercolor:
+    - white
+    optionstextcolor:
+    - green
+reporting: "off"
