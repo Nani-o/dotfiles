@@ -14,7 +14,7 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 
 # https://github.com/bhilburn/powerlevel9k/wiki/Troubleshooting
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs virtualenv)
-PROMPT_CONTEXT_COLOR="purple"
+PROMPT_CONTEXT_COLOR="magenta"
 [[ "${HOSTNAME}" == "dedinani" ]] && PROMPT_CONTEXT_COLOR="red"
 [[ "${HOSTNAME}" == "louboutou" ]] && PROMPT_CONTEXT_COLOR="green"
 [[ "${HOSTNAME}" == "narusegawa" ]] && PROMPT_CONTEXT_COLOR="cyan"
