@@ -5,6 +5,7 @@ export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 export ZSH=/home/nani/.oh-my-zsh
 export EDITOR=/bin/nano
 export TERM="xterm-256color"
+export HOSTNAME="$(hostname | tr '[:upper:]' '[:lower:]')"
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -13,14 +14,19 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 
 # https://github.com/bhilburn/powerlevel9k/wiki/Troubleshooting
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs virtualenv)
+
+POWERLEVEL9K_CONTEXT_DEFAULT_BACKGROUND="purple"
+[[ "${HOSTNAME}" == "dedinani" ]] && POWERLEVEL9K_CONTEXT_DEFAULT_BACKGROUND="red"
+[[ "${HOSTNAME}" == "louboutou" ]] && POWERLEVEL9K_CONTEXT_DEFAULT_BACKGROUND="green"
+[[ "${HOSTNAME}" == "narusegawa" ]] && POWERLEVEL9K_CONTEXT_DEFAULT_BACKGROUND="cyan"
+[[ "${HOSTNAME}" == "pikachu" ]] && POWERLEVEL9K_CONTEXT_DEFAULT_BACKGROUND="yellow"
+POWERLEVEL9K_CONTEXT_DEFAULT_FOREGROUND="ffffff"
+POWERLEVEL9K_CONTEXT_ROOT_FOREGROUND="ffffff"
+POWERLEVEL9K_CONTEXT_SEPARATOR="blue"
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
 POWERLEVEL9K_DIR_HOME_FOREGROUND="ffffff"
 POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND="ffffff"
 POWERLEVEL9K_DIR_DEFAULT_FOREGROUND="ffffff"
-POWERLEVEL9K_CONTEXT_DEFAULT_FOREGROUND="ffffff"
-POWERLEVEL9K_CONTEXT_ROOT_FOREGROUND="ffffff"
-POWERLEVEL9K_CONTEXT_DEFAULT_BACKGROUND="red"
-POWERLEVEL9K_CONTEXT_SEPARATOR="blue"
 POWERLEVEL9K_VCS_CLEAN_FOREGROUND='black'
 POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='black'
 POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='black'
