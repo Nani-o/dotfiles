@@ -50,7 +50,8 @@ function retry {
 # Mosh
 
 function kill_idle_mosh {
-    ps -e | grep "mosh-server" | grep -v "^$PPID" | awk '{print $1}' | xargs -r --verbose kill -TERM
+    pgrep "mosh-server" | xargs -r --verbose kill -TERM
+    # ps -e | grep "mosh-server" | grep -v "^$PPID" | awk '{print $1}' | xargs -r --verbose kill -TERM
 }
 
 # List crontabs for all user
