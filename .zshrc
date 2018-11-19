@@ -35,7 +35,7 @@ POWERLEVEL9K_VIRTUALENV_FOREGROUND='ffffff'
 POWERLEVEL9K_VIRTUALENV_BACKGROUND='magenta'
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 
-ENABLE_CORRECTION="true"
+# ENABLE_CORRECTION="true"
 HIST_STAMPS="mm/dd/yyyy"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
