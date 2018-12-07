@@ -135,6 +135,19 @@ function device_as_screen {
 alias iphone='device_as_screen iphone'
 alias ipad='device_as_screen ipad'
 
+# Tmux
+
+function aoc2018 {
+    tmux has-session -t aoc &> /dev/null
+    if [[ $? != 0 ]]
+    then
+        tmux new-session -s aoc -n aoc -d 'zsh -c "cd github/others/adventofcode2018; zsh -i"'
+        tmux split-window -d -h -p 40 -t aoc 'zsh -c "cd github/others/adventofcode2018; source ~/.zshrc ; press_to_reload tox -q; zsh -i"'
+    fi
+
+    tmux attach-session -t aoc
+}
+
 # Chart for tput colors
 # inspired by https://linuxtidbits.wordpress.com/2008/08/11/output-color-on-bash-scripts/
 
