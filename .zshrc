@@ -4,7 +4,7 @@ export "PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH"
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 export EDITOR="$(whereis nano)"
-export TERM="xterm-256color"
+[[ $TMUX = "" ]] && export TERM="xterm-256color"
 export HOSTNAME="$(hostname | tr '[:upper:]' '[:lower:]')"
 
 # Set name of the theme to load. Optionally, if you set this to "random"
