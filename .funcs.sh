@@ -138,7 +138,7 @@ alias ipad='device_as_screen ipad'
 # Tmux
 
 function aoc2018 {
-    if tmux has-session -t aoc &> /dev/null
+    if ! tmux has-session -t aoc &> /dev/null
     then
         tmux new-session -s aoc -n aoc -d 'zsh -c "cd github/others/adventofcode2018; zsh -i; export TERM=screen"'
         tmux split-window -d -h -p 40 -t aoc 'zsh -c "cd github/others/adventofcode2018; source ~/.zshrc ; press_to_reload tox -q; zsh -i"'
