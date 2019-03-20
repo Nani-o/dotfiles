@@ -82,7 +82,7 @@ function ansible_role {
     ansible_role="${1}"
     ansible_target="${2}"
     shift 2
-    temp_playbook=$(mktemp -p /tmp --suffix '.yml')
+    temp_playbook=$(mktemp)
 cat > "${temp_playbook}" <<- EOM
 ---
 - hosts: ${ansible_target}
