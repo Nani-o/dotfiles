@@ -2,5 +2,6 @@ set tabsize 4
 set tabstospaces
 set constantshow
 set nowrap
+set softwrap
 
 include ~/.nano/*.nanorc
