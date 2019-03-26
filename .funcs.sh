@@ -89,8 +89,10 @@ cat > "${temp_playbook}" <<- EOM
   roles:
     - ${ansible_role}
 EOM
-    unbuff_binary=$(which unbuffer)
-    [[ "$?" != "0" ]] && unbuff_binary=""
+    if not unbuff_binary="$(which unbuffer)"
+    then
+      unbuff_binary=""
+    fi
     $unbuff_binary ansible-playbook "${temp_playbook}" "${@}"
     rm -rf "${temp_playbook}"
 }
