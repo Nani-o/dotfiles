@@ -23,7 +23,7 @@ then
     function d {
         RECENT_FOLDERS=$(dirs -v)
         NB_RECENT_FOLDERS=$(echo "${RECENT_FOLDERS}" | wc -l)
-        PREVIEW_WINDOW_SIZE=$(($(tput lines)-NB_RECENT_FOLDERS-2))
+        PREVIEW_WINDOW_SIZE=$(($(tput lines)-NB_RECENT_FOLDERS-4))
         PREVIEW_COMMAND="tree -L 1 -C {}"
         cd "$(echo "${RECENT_FOLDERS}" | \
                 sed 's/[0-9]*[[:space:]]//' | \
