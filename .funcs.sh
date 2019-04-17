@@ -21,7 +21,14 @@ if which fzf
 then
     unalias d
     function d {
-        cd $(dirs -v | sed 's/[0-9]*[[:space:]]//' | xargs -L 1 -I {} -P 1 bash -c 'echo {}' | fzf --layout=reverse --preview-window down:$(($(tput lines)-16)) --preview='tree -L 1 -C {}')
+        RECENT_FOLDERS=$(dirs -v)
+        NB_RECENT_FOLDERS=$(echo "${RECENT_FOLDERS}" | wc -l)
+        PREVIEW_WINDOW_SIZE=$(($(tput lines)-NB_RECENT_FOLDERS-2))
+        PREVIEW_COMMAND="tree -L 1 -C {}"
+        cd "$(echo "${RECENT_FOLDERS}" | \
+                sed 's/[0-9]*[[:space:]]//' | \
+                xargs -L 1 -I {} -P 1 bash -c 'echo {}' | \
+                fzf --layout=reverse --preview-window down:"${PREVIEW_WINDOW_SIZE}" --preview="${PREVIEW_COMMAND}")" || return
     }
 fi
 
