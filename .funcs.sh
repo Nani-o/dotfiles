@@ -15,6 +15,16 @@ function git_pull_then_playbook {
   done
 }
 
+# Folder navigation
+
+if which fzf
+then
+    unalias d
+    function d {
+        cd $(dirs -v | sed 's/[0-9]*[[:space:]]//' | xargs -L 1 -I {} -P 1 bash -c 'echo {}' | fzf --layout=reverse --preview-window down:$(($(tput lines)-16)) --preview='tree -L 1 -C {}')
+    }
+fi
+
 # Wrapper for reloading a screen with a command at any hit key
 
 function press_to_reload {
