@@ -17,7 +17,7 @@ function git_pull_then_playbook {
 
 # Folder navigation
 
-if which fzf
+if which fzf > /dev/null
 then
     unalias d
     function d {
