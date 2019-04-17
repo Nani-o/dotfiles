@@ -19,7 +19,7 @@ function git_pull_then_playbook {
 
 if which fzf > /dev/null
 then
-    unalias d
+    unalias d 2>/dev/null
     function d {
         RECENT_FOLDERS=$(dirs -v)
         NB_RECENT_FOLDERS=$(echo "${RECENT_FOLDERS}" | wc -l)
