@@ -84,7 +84,7 @@ function kill_idle_mosh {
 function cron_all_users {
     while read -r cron_user; do
         sudo crontab -u "${cron_user}" -l
-    done <<< "$(cut -f1 -d: /etc/passwd)"
+    done <<< "$(grep -ve '^#' /etc/passwd | cut -f1 -d:)"
 }
 
 # Scanning new or expanded disks in a VM
@@ -174,6 +174,50 @@ function aoc2018 {
     fi
 
     tmux attach-session -t aoc
+}
+
+fawk() {
+    first="awk '{print "
+    last="}' $2"
+    cmd="${first}\$${1}${last}"
+    eval $cmd
+}
+
+scanforupdateddisk() {
+    BEFORE=$(lsblk -r -n)
+    while read -r line
+    do
+        echo 1 > /sys/class/scsi_device/$line/device/rescan
+    done <<< "$(ls /sys/class/scsi_device/)"
+    AFTER=$(lsblk -r -n)
+
+    diff -y <(echo "$BEFORE") <(echo "$AFTER") | grep '|' | awk '{print $1": "$4" => "$11}'
+}
+
+scanfornewdisk() {
+    BEFORE=$(lsblk -r -n)
+    while read -r line
+    do
+        echo "- - -" > /sys/class/scsi_host/$line/scan
+    done <<< "$(ls /sys/class/scsi_host)"
+    AFTER=$(lsblk -r -n)
+    NEW_DISKS=$(echo -e "${AFTER}\n${BEFORE}" | sort | uniq -c | grep '^\ *1 ' | awk '{print $2}' | tr '\n' ',' | sed
+'s/,$//')
+    [[ -z "$NEW_DISKS" ]] && echo "Pas de nouveaux disques détectés" || echo "Le(s) disque(s) $NEW_DISKS ont été détec
+tés"
+}
+
+secondstoduration() {
+    local T=$1
+    local D=$((T/60/60/24))
+    local H=$((T/60/60%24))
+    local M=$((T/60%60))
+    local S=$((T%60))
+    (( $D > 0 )) && printf '%d jours ' $D
+    (( $H > 0 )) && printf '%d heures ' $H
+    (( $M > 0 )) && printf '%d minutes ' $M
+    (( $D > 0 || $H > 0 || $M > 0 )) && printf 'and '
+    printf '%d secondes\n' $S
 }
 
 # Chart for tput colors
