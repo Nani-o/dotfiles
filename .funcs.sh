@@ -90,15 +90,23 @@ function cron_all_users {
 # Scanning new or expanded disks in a VM
 
 function scan_new_disk {
+    BEFORE=$(sudo lsblk -r -n)
     for scsi_host in /sys/class/scsi_host/*; do
-        sudo bash -c "echo '- - -' > /sys/class/scsi_host/${scsi_host}/scan"
+        sudo bash -c "echo '- - -' > ${scsi_host}/scan"
     done
+    AFTER=$(lsblk -r -n)
+    NEW_DISKS=$(echo -e "${AFTER}\n${BEFORE}" | sort | uniq -c | grep '^\ *1 ' | awk '{print $2}' | tr '\n' ',' | sed 's/,$//')
+    [[ -z "$NEW_DISKS" ]] && echo "Pas de nouveaux disques détectés" || echo "Le(s) disque(s) $NEW_DISKS ont été détectés"
 }
 
 function rescan_disks {
+    BEFORE=$(sudo lsblk -r -n)
     for scsi_device in /sys/class/scsi_device/*; do
-        sudo bash -c "echo 1 > /sys/class/scsi_device/${scsi_device}/device/rescan"
+        sudo bash -c "echo 1 > ${scsi_device}/device/rescan"
     done
+    AFTER=$(sudo lsblk -r -n)
+
+    diff -y <(echo "$BEFORE") <(echo "$AFTER") | grep '|' | awk '{print $1": "$4" => "$11}'
 }
 
 # Ansible shortcuts
@@ -180,31 +188,7 @@ fawk() {
     first="awk '{print "
     last="}' $2"
     cmd="${first}\$${1}${last}"
-    eval $cmd
-}
-
-scanforupdateddisk() {
-    BEFORE=$(lsblk -r -n)
-    while read -r line
-    do
-        echo 1 > /sys/class/scsi_device/$line/device/rescan
-    done <<< "$(ls /sys/class/scsi_device/)"
-    AFTER=$(lsblk -r -n)
-
-    diff -y <(echo "$BEFORE") <(echo "$AFTER") | grep '|' | awk '{print $1": "$4" => "$11}'
-}
-
-scanfornewdisk() {
-    BEFORE=$(lsblk -r -n)
-    while read -r line
-    do
-        echo "- - -" > /sys/class/scsi_host/$line/scan
-    done <<< "$(ls /sys/class/scsi_host)"
-    AFTER=$(lsblk -r -n)
-    NEW_DISKS=$(echo -e "${AFTER}\n${BEFORE}" | sort | uniq -c | grep '^\ *1 ' | awk '{print $2}' | tr '\n' ',' | sed
-'s/,$//')
-    [[ -z "$NEW_DISKS" ]] && echo "Pas de nouveaux disques détectés" || echo "Le(s) disque(s) $NEW_DISKS ont été détec
-tés"
+    eval "$cmd"
 }
 
 secondstoduration() {
@@ -213,10 +197,10 @@ secondstoduration() {
     local H=$((T/60/60%24))
     local M=$((T/60%60))
     local S=$((T%60))
-    (( $D > 0 )) && printf '%d jours ' $D
-    (( $H > 0 )) && printf '%d heures ' $H
-    (( $M > 0 )) && printf '%d minutes ' $M
-    (( $D > 0 || $H > 0 || $M > 0 )) && printf 'and '
+    (( D > 0 )) && printf '%d jours ' $D
+    (( H > 0 )) && printf '%d heures ' $H
+    (( M > 0 )) && printf '%d minutes ' $M
+    (( D > 0 || H > 0 || M > 0 )) && printf 'and '
     printf '%d secondes\n' $S
 }
 
