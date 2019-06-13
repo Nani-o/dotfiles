@@ -37,6 +37,7 @@ POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 
 # ENABLE_CORRECTION="true"
 HIST_STAMPS="mm/dd/yyyy"
+DISABLE_AUTO_TITLE="true"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
