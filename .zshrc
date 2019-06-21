@@ -3,7 +3,7 @@ export "PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:/usr/local/sbin:$PATH"
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
-export EDITOR="$(whereis nano)"
+export EDITOR="$(which nano)"
 [[ $TMUX = "" ]] && export TERM="xterm-256color"
 export HOSTNAME="$(hostname | tr '[:upper:]' '[:lower:]')"
 
