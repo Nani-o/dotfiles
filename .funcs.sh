@@ -243,6 +243,12 @@ TXTBOLD=$(tput bold)
 TXTUNDERLINE=$(tput smul)
 TXTNORMAL=$(tput sgr0)
 
-# Some aliases for funcs
+# Aliases
 alias rto='press_to_reload -t 300 travis_overview'
 alias lg='lazygit'
+
+# OSX aliases
+if [[ "$OS" == "OSX" ]];
+then
+    alias subl='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
+fi
