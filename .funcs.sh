@@ -35,7 +35,7 @@ function s {
 function h {
     COMMAND=$(history | sed -E 's/^\ *[0-9]*\ *([0-9]*\/){2}[0-9]{4}\ [0-9]{2}:[0-9]{2}\ *//g' | tac | fzf --layout=reverse)
     # shellcheck disable=SC2153
-    ${=COMMAND}  # Zsh word splitting see : http://zsh.sourceforge.net/FAQ/zshfaq03.html
+    eval ${=COMMAND}  # Zsh word splitting see : http://zsh.sourceforge.net/FAQ/zshfaq03.html
 }
 
 # Folder navigation
