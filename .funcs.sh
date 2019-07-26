@@ -15,6 +15,21 @@ function git_pull_then_playbook {
   done
 }
 
+# Open file in editor
+function s {
+    FILES_PATH="."
+    if [[ -d "$1" ]]; then
+        FILES_PATH="$1"
+    elif [[ -f "$1" ]]; then
+        $EDITOR "$1"
+        return
+    fi
+
+    FILE_TO_OPEN="$(find "$FILES_PATH" -type f -not -path '*/\.*' | \
+        fzf --reverse --preview 'bat --color=always {}' --preview-window down:85%)"
+    [[ -f "$FILE_TO_OPEN" ]] && $EDITOR "$FILE_TO_OPEN"
+}
+
 # History search
 
 function h {
