@@ -246,9 +246,3 @@ TXTNORMAL=$(tput sgr0)
 # Aliases
 alias rto='press_to_reload -t 300 travis_overview'
 alias lg='lazygit'
-
-# OSX aliases
-if [[ "$OS" == "OSX" ]];
-then
-    alias subl='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
-fi
