@@ -16,6 +16,7 @@ function git_pull_then_playbook {
 }
 
 # Open file in editor
+
 function s {
     FILES_PATH="."
     if [[ -d "$1" ]]; then
@@ -144,6 +145,16 @@ EOM
     fi
     $unbuff_binary ansible-playbook "${temp_playbook}" "${@}"
     rm -rf "${temp_playbook}"
+}
+
+# LXD
+
+function lxc_create_aliases {
+    LAB_CONTAINERS=$(lxc list lab- -c n --format csv | tr '\n' ' ' | sed 's/\ $//')
+    lxc alias remove stop-lab
+    lxc alias add stop-lab "stop -f --timeout 5 ${LAB_CONTAINERS}"
+    lxc alias remove start-lab
+    lxc alias add start-lab "start ${LAB_CONTAINERS}"
 }
 
 # Travis
