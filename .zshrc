@@ -6,7 +6,7 @@ export ZSH="$HOME/.oh-my-zsh"
 
 # Editor
 export EDITOR="$(which nano)"
-if [[ "$OS" == "OSX" && -f '/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl' ]];
+if [[ -f '/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl' ]];
 then
     export EDITOR='/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl'
     alias subl='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
