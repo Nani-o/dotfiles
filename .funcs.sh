@@ -20,7 +20,7 @@ function git_pull_then_playbook {
 function s {
     FILES_PATH="."
     if [[ -d "$1" ]]; then
-        FILES_PATH="$1"
+        FILES_PATH="$(cd $1; pwd)"
     elif [[ -f "$1" ]]; then
         $EDITOR "$1"
         return
