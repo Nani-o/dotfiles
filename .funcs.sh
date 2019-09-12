@@ -46,7 +46,7 @@ if which fzf > /dev/null
 then
     unalias d 2>/dev/null
     function d {
-        RECENT_FOLDERS=$(dirs -v)
+        RECENT_FOLDERS=$(dirs -v | sed '1d')
         NB_RECENT_FOLDERS=$(echo "${RECENT_FOLDERS}" | wc -l)
         PREVIEW_WINDOW_SIZE=$(($(tput lines)-NB_RECENT_FOLDERS-4))
         PREVIEW_COMMAND="tree -L 1 -C {}"
