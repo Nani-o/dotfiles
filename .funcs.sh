@@ -79,6 +79,22 @@ function press_to_reload_runner {
     echo -e "\n${TXTBOLD}${TXTGREEN}Press any key to reload,${TXTRED} q for exiting${TXTNORMAL}"
 }
 
+function watchnrun {
+    WATCH="${1}"
+    shift
+    RUN="${@}"
+    HASH=""
+    while true
+    do
+        NEW_HASH=$(gfind "${WATCH}" -type f -not -path "*.git/*" -printf '%m%c%p' | md5sum)
+        if [[ "${HASH}" != "${NEW_HASH}" && "${HASH}" != "" ]]; then
+            eval "${RUN}"
+        fi
+        HASH="${NEW_HASH}"
+        sleep 2
+    done
+}
+
 # Wrapper for retrying command until it works
 
 function retry {
