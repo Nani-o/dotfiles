@@ -173,6 +173,37 @@ function lxc_create_aliases {
     lxc alias add start-lab "start ${LAB_CONTAINERS}"
 }
 
+# Docker OS X
+
+if [[ "${OSTYPE}" == *"darwin"* ]]; then
+    function is_docker_running {
+        pgrep Docker 2&>1 >/dev/null
+        return $?
+    }
+
+    function docker_start {
+        is_docker_running && echo "Docker already started" && return
+        open -a Docker
+        echo "Docker starting"
+        START="$(date +%s)"
+    }
+
+    function docker_stop {
+        is_docker_running && osascript -e 'quit app "Docker"' && echo "Docker stopped" && return
+        echo "Docker already stopped"
+    }
+
+    function docker_purge {
+        if is_docker_running; then
+            CONTAINERS=$(docker ps -a -q)
+            [[ ! -z "${CONTAINERS}" ]] && docker rm --force "$CONTAINERS"
+            docker system prune --all --force
+        else
+            echo "Docker is not running"
+        fi
+    }
+fi
+
 # Travis
 
 function travis_overview {
