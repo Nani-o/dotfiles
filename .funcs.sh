@@ -82,13 +82,13 @@ function press_to_reload_runner {
 function watchnrun {
     WATCH="${1}"
     shift
-    RUN="${@}"
+    RUN=("${@}")
     HASH=""
     while true
     do
         NEW_HASH=$(gfind "${WATCH}" -type f -not -path "*.git/*" -printf '%m%c%p' | md5sum)
         if [[ "${HASH}" != "${NEW_HASH}" && "${HASH}" != "" ]]; then
-            eval "${RUN}"
+            "${RUN[@]}"
         fi
         HASH="${NEW_HASH}"
         sleep 2
