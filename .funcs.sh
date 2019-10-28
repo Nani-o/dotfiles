@@ -195,7 +195,7 @@ if [[ "${OSTYPE}" == *"darwin"* ]]; then
 
     function docker_purge {
         if is_docker_running; then
-            CONTAINERS=$(docker ps -a -q)
+            CONTAINERS=$(docker ps -a -q | tr '\n' ' ')
             [[ ! -z "${CONTAINERS}" ]] && docker rm --force ${CONTAINERS}
             docker system prune --all --force
         else
