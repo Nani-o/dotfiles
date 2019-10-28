@@ -177,7 +177,7 @@ function lxc_create_aliases {
 
 if [[ "${OSTYPE}" == *"darwin"* ]]; then
     function is_docker_running {
-        pgrep Docker 2&>1 >/dev/null
+        pgrep Docker 2>&1 >/dev/null
         return $?
     }
 
