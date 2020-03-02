@@ -278,6 +278,16 @@ secondstoduration() {
     printf '%d secondes\n' $S
 }
 
+# Videos
+
+function video2gif {
+    palette="/tmp/palette.png"
+    filters="fps=15,scale=1080:-1:flags=lanczos"
+    ffmpeg -v warning -i $1 -vf "$filters,palettegen" -y $palette
+    ffmpeg -v warning -i $1 -i $palette -lavfi "$filters [x]; [x][1:v] paletteuse" -y $2
+    rm $palette
+}
+
 # Chart for tput colors
 # inspired by https://linuxtidbits.wordpress.com/2008/08/11/output-color-on-bash-scripts/
 
