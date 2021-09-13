@@ -3,5 +3,7 @@ set tabstospaces
 set constantshow
 set nowrap
 set softwrap
+set minibar
+set nohelp
 
 include ~/.nano/*.nanorc
