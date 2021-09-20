@@ -28,7 +28,7 @@ POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs virtualenv)
 PROMPT_CONTEXT_COLOR="magenta"
 [[ "${HOSTNAME}" == "dedinani.net" ]] && PROMPT_CONTEXT_COLOR="red"
 [[ "${HOSTNAME}" == "narusegawa" ]] && PROMPT_CONTEXT_COLOR="cyan"
-[[ "${HOSTNAME}" == "mizuho" ]] && PROMPT_CONTEXT_COLOR="yellow"
+[[ "${HOSTNAME}" == "mizuho.local" ]] && PROMPT_CONTEXT_COLOR="cyan"
 POWERLEVEL9K_CONTEXT_DEFAULT_BACKGROUND="$PROMPT_CONTEXT_COLOR"
 POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="%K{white}%k"
 POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%K{$PROMPT_CONTEXT_COLOR} $ %k%F{$PROMPT_CONTEXT_COLOR}\ue0B0%f "
@@ -61,8 +61,6 @@ DISABLE_AUTO_TITLE="true"
 plugins=(
   git
 )
-
-eval $(thefuck --alias)
 
 source $ZSH/oh-my-zsh.sh
 [[ -f ~/.extras.sh ]] && source ~/.extras.sh
