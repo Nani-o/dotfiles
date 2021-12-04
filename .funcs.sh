@@ -60,8 +60,18 @@ fi
 # Wrapper for reloading a screen with a command at any hit key
 
 function press_to_reload {
+    BUFFERED=0
+    AUTO_RELOAD=3600
+    while getopts 'bt:' opt; do
+        case $opt in
+                b) BUFFERED=1;;
+                t) AUTO_RELOAD=$OPTARG;;
+        esac
+    done
+
+    shift $((OPTIND-1))
+
     [[ -z "${1}" ]] && echo "Usage: press_to_reload [-t auto_reload] command" && return
-    [[ "${1}" == "-t" ]] && AUTO_RELOAD="${2}" && shift 2 || AUTO_RELOAD=3600
     [[ -n "${ZSH_VERSION}" ]] && READ_ARGS="-k" || READ_ARGS="-n"
     local KEY_PRESSED
 
@@ -73,9 +83,10 @@ function press_to_reload {
 }
 
 function press_to_reload_runner {
+    [[ "$BUFFERED" == 1 ]] && BUFFER=$("$@")
     clear
-    echo "run : $* | auto_reload : ${AUTO_RELOAD}"
-    "$@"
+    echo "run : $* | auto_reload : ${AUTO_RELOAD}s"
+    [[ "$BUFFERED" == 1 ]] && echo "$BUFFER" || "$@"
     echo -e "\n${TXTBOLD}${TXTGREEN}Press any key to reload,${TXTRED} q for exiting${TXTNORMAL}"
 }
 
