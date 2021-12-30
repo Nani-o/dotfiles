@@ -57,6 +57,32 @@ then
     }
 fi
 
+function c {
+    FILES_PATH="."
+    if [[ -d "$1" ]]; then
+        FILES_PATH="$(cd "$1" && pwd)"
+    elif [[ -f "$1" || ! -z "$1" ]]; then
+        "$EDITOR" "$1"
+        return
+    fi
+    while true
+    do
+        FILES_TO_DELETE="$(find -L "$FILES_PATH" -mindepth 1 -not -path '*/\.*' | \
+                        fzf --reverse -m --preview 'du -Lsh {}' --preview-window up:1%)"
+        clear
+        [[ ${FILES_TO_DELETE} == "" ]] && break
+        echo "You are about to run :"
+        echo "$FILES_TO_DELETE" | tr '\n' '\0' | xargs -0 -L 1 -P 1 -I {} echo rm -rf "{}"
+        echo
+        echo -n "This will free : "
+        echo "$FILES_TO_DELETE" | tr '\n' '\0' | xargs -0 -P 1 du -ch | tail -1 | awk '{print $1}'
+        echo -n "Are you sure ? [y/n] : "
+        read -r CHOICE
+        CHOICE="$(echo $CHOICE | tr 'a-z' 'A-Z')"
+        [[ ${CHOICE} == "Y" ]] && echo "$FILES_TO_DELETE" | tr '\n' '\0' | xargs -0 -L 1 -P 1 -I {} rm -rf "{}"
+    done
+}
+
 # Wrapper for reloading a screen with a command at any hit key
 
 function press_to_reload {
