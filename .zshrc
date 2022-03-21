@@ -62,7 +62,7 @@ plugins=(
   git
 )
 
-source $ZSH/oh-my-zsh.sh
 [[ -f ~/.extras.sh ]] && source ~/.extras.sh
 source ~/.funcs.sh
 [[ -f ~/.iterm2_shell_integration.zsh ]] && source ~/.iterm2_shell_integration.zsh
+source $ZSH/oh-my-zsh.sh
