@@ -9,3 +9,6 @@ gui:
     optionstextcolor:
     - green
 reporting: "off"
+keybinding:
+  universal:
+    appendNewline: '<tab>'  
