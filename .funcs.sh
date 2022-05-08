@@ -269,8 +269,8 @@ function screen_ctl {
         fi
     elif [[ "${action}" == "cmd" ]]
     then
-        cmd="${*}\n"
-        screen -S "${screen_name}" -X stuff "${cmd}"
+        cmd="${*}"
+        screen -S "${screen_name}" -X stuff "${cmd}"$(echo -ne '\015')
     fi
 }
 
