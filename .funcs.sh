@@ -185,7 +185,7 @@ function ansible_role {
     ansible_role="${1}"
     ansible_target="${2}"
     shift 2
-    temp_playbook=$(mktemp)
+    temp_playbook=$(mktemp -p $(pwd))
 cat > "${temp_playbook}" <<- EOM
 ---
 - hosts: ${ansible_target}
