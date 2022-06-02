@@ -121,9 +121,10 @@ function watchnrun {
     shift
     RUN=("${@}")
     HASH=""
+    FIND_BIN=$((which gfind || which find) | grep /
     while true
     do
-        NEW_HASH=$(gfind "${WATCH}" -type f -not -path "*.git/*" -printf '%m%c%p' | md5sum)
+        NEW_HASH=$("${FIND_BIN}" "${WATCH}" -type f -not -path "*.git/*" -printf '%m%c%p' | md5sum)
         if [[ "${HASH}" != "${NEW_HASH}" && "${HASH}" != "" ]]; then
             "${RUN[@]}"
         fi
@@ -284,6 +285,19 @@ alias iphone='device_as_screen iphone'
 alias ipad='device_as_screen ipad'
 
 # Tmux
+
+function dshell {
+    session="dshell"
+    pwd=$(pwd)
+    if tmux has-session -t $session &> /dev/null
+    then
+        tmux kill-session -t $session
+    fi
+    tmux new-session -s $session -n $session -d "zsh -c \"cd $pwd; source ~/.zshrc ; nano dshell.sh ; rm dshell.sh\""
+    tmux split-window -d -h -p 40 -t $session "zsh -c \"cd $pwd; source ~/.zshrc ; watchnrun dshell.sh zsh dshell.sh\""
+
+    tmux attach-session -t $session
+}
 
 function aoc2018 {
     if ! tmux has-session -t aoc &> /dev/null
