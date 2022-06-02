@@ -121,7 +121,7 @@ function watchnrun {
     shift
     RUN=("${@}")
     HASH=""
-    FIND_BIN=$((which gfind || which find) | grep /
+    FIND_BIN=$((which gfind || which find) | grep /)
     while true
     do
         NEW_HASH=$("${FIND_BIN}" "${WATCH}" -type f -not -path "*.git/*" -printf '%m%c%p' | md5sum)
