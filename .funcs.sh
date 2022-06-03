@@ -293,7 +293,7 @@ function dshell {
     then
         tmux kill-session -t $session
     fi
-    tmux new-session -s $session -n $session -d "zsh -c \"cd $pwd; source ~/.zshrc ; nano dshell.sh ; rm dshell.sh\""
+    tmux new-session -s $session -n $session -d "zsh -c \"cd $pwd; source ~/.zshrc ; touch dshell.sh ; nano dshell.sh ; rm dshell.sh\""
     tmux split-window -d -h -p 40 -t $session "zsh -c \"cd $pwd; source ~/.zshrc ; watchnrun dshell.sh zsh dshell.sh\""
 
     tmux attach-session -t $session
