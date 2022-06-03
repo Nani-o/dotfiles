@@ -7,3 +7,5 @@ set minibar
 set nohelp
 
 include ~/.nano/*.nanorc
+
+bind ^Q   exit          all
