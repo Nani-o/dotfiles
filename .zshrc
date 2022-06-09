@@ -22,45 +22,8 @@ export HOSTNAME="$(hostname | tr '[:upper:]' '[:lower:]')"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="powerlevel10k/powerlevel10k"
-
-# https://github.com/bhilburn/powerlevel9k/wiki/Troubleshooting
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs virtualenv)
-PROMPT_CONTEXT_COLOR="magenta"
-[[ "${HOSTNAME}" == "dedinani.net" ]] && PROMPT_CONTEXT_COLOR="red"
-[[ "${HOSTNAME}" == "narusegawa" ]] && PROMPT_CONTEXT_COLOR="cyan"
-[[ "${HOSTNAME}" == "mizuho.local" ]] && PROMPT_CONTEXT_COLOR="cyan"
-POWERLEVEL9K_CONTEXT_DEFAULT_BACKGROUND="$PROMPT_CONTEXT_COLOR"
-POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="%K{white}%k"
-POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%K{$PROMPT_CONTEXT_COLOR} $ %k%F{$PROMPT_CONTEXT_COLOR}\ue0B0%f "
-POWERLEVEL9K_CONTEXT_DEFAULT_FOREGROUND="ffffff"
-POWERLEVEL9K_CONTEXT_ROOT_FOREGROUND="ffffff"
-POWERLEVEL9K_CONTEXT_SEPARATOR="blue"
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
-POWERLEVEL9K_DIR_HOME_FOREGROUND="ffffff"
-POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND="ffffff"
-POWERLEVEL9K_DIR_DEFAULT_FOREGROUND="ffffff"
-POWERLEVEL9K_VCS_CLEAN_FOREGROUND='black'
-POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='black'
-POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='black'
-POWERLEVEL9K_VIRTUALENV_FOREGROUND='ffffff'
-POWERLEVEL9K_VIRTUALENV_BACKGROUND='magenta'
-POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-POWERLEVEL9K_HOME_ICON=''
-POWERLEVEL9K_HOME_SUB_ICON=''
-POWERLEVEL9K_FOLDER_ICON=''
-POWERLEVEL9K_ETC_ICON=''
-
-# ENABLE_CORRECTION="true"
-HIST_STAMPS="mm/dd/yyyy"
-DISABLE_AUTO_TITLE="true"
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(
-  git
-)
+source ~/.p10k.zsh
 
 [[ -f ~/.extras.sh ]] && source ~/.extras.sh
 source ~/.funcs.sh
