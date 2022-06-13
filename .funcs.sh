@@ -386,3 +386,4 @@ TXTNORMAL=$(tput sgr0)
 # Aliases
 alias rto='press_to_reload -t 300 travis_overview'
 alias lg='lazygit'
+alias lzd='lazydocker'
