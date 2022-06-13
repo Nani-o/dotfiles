@@ -1,7 +1,7 @@
 # A collection of shell functions
 
 function update_dotfiles {
-  git pull -C ~/.dotfiles
+  git -C ~/.dotfiles pull
   source ~/.zshrc
 }
 
