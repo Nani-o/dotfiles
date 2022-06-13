@@ -1,5 +1,10 @@
 # A collection of shell functions
 
+function update_dotfiles {
+  git pull -C ~/.dotfiles
+  source ~/.zshrc
+}
+
 # Event then action
 
 function git_pull_then_playbook {
