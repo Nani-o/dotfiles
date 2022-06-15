@@ -28,7 +28,6 @@ export CONTEXT_BACKGROUND=014
 [[ ${HOSTNAME} == "dedinani"* ]] && export CONTEXT_BACKGROUND=001
 source ~/.p10k.zsh
 
-[[ -f ~/.extras.sh ]] && source ~/.extras.sh
 source ~/.funcs.sh
-[[ -f ~/.iterm2_shell_integration.zsh ]] && source ~/.iterm2_shell_integration.zsh
+[[ -f ~/.extras.sh ]] && source ~/.extras.sh
 source $ZSH/oh-my-zsh.sh
