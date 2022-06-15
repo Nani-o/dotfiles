@@ -22,6 +22,7 @@ export HOSTNAME="$(hostname | tr '[:upper:]' '[:lower:]')"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="powerlevel10k/powerlevel10k"
+export CONTEXT_BACKGROUND=014
 [[ ${HOSTNAME} == "mizuho"* ]] && export CONTEXT_BACKGROUND=014
 [[ ${HOSTNAME} == "pi"* ]] && export CONTEXT_BACKGROUND=002
 [[ ${HOSTNAME} == "dedinani"* ]] && export CONTEXT_BACKGROUND=001
