@@ -16,7 +16,7 @@ Using
 I used to run an ansible [role](https://github.com/Nani-o/ansible-role-dotfiles) for deploying my dotfiles, I now use a setup script :
 
 ```Shell
-zsh -ec "$(wget https://raw.githubusercontent.com/Nani-o/dotfiles/master/setup.sh -O -)"
+zsh -ec "$(wget https://raw.githubusercontent.com/Nani-o/dotfiles/master/install.sh -O -)"
 ```
 
 What this script does is :
