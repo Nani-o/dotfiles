@@ -11,10 +11,6 @@ function update_dotfiles {
   fi
 }
 
-function test_update {
-  echo "test"
-}
-
 # Event then action
 
 function git_pull_then_playbook {
