@@ -38,3 +38,6 @@ echo "${NESTED}" \
 echo "${NESTED}" \
     | sed "s@$REPO_PATH/@@g" \
     | xargs -I {} ln -fs "${REPO_PATH}/{}" "${HOME}/{}"
+
+echo $0
+
