@@ -1,8 +1,14 @@
 # A collection of shell functions
 
 function update_dotfiles {
-  ~/.dotfiles/setup.sh
-  source ~/.zshrc
+  BEFORE="$(git log -1 --oneline)"
+  git -C ~/.dotfiles pull
+  AFTER="$(git log -1 --oneline)"
+  if [[ "$BEFORE" != "$AFTER" ]]
+  then
+    ~/.dotfiles/symlinks.sh
+    source ~/.zshrc
+  fi
 }
 
 # Event then action
