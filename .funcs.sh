@@ -367,21 +367,24 @@ function tput_colors {
 }
 
 # ANSI Escape sequence for color stored as variables with tput
-TXTBLACK=$(tput setaf 0)
-TXTRED=$(tput setaf 1)
-TXTGREEN=$(tput setaf 2)
-TXTLIME_YELLOW=$(tput setaf 190)
-TXTYELLOW=$(tput setaf 3)
-TXTPOWDER_BLUE=$(tput setaf 153)
-TXTBLUE=$(tput setaf 4)
-TXTMAGENTA=$(tput setaf 5)
-TXTCYAN=$(tput setaf 6)
-TXTWHITE=$(tput setaf 7)
-TXTBLINK=$(tput blink)
-TXTREVERSE=$(tput smso)
-TXTBOLD=$(tput bold)
-TXTUNDERLINE=$(tput smul)
-TXTNORMAL=$(tput sgr0)
+if $(which tput)
+then
+    TXTBLACK=$(tput setaf 0)
+    TXTRED=$(tput setaf 1)
+    TXTGREEN=$(tput setaf 2)
+    TXTLIME_YELLOW=$(tput setaf 190)
+    TXTYELLOW=$(tput setaf 3)
+    TXTPOWDER_BLUE=$(tput setaf 153)
+    TXTBLUE=$(tput setaf 4)
+    TXTMAGENTA=$(tput setaf 5)
+    TXTCYAN=$(tput setaf 6)
+    TXTWHITE=$(tput setaf 7)
+    TXTBLINK=$(tput blink)
+    TXTREVERSE=$(tput smso)
+    TXTBOLD=$(tput bold)
+    TXTUNDERLINE=$(tput smul)
+    TXTNORMAL=$(tput sgr0)
+fi
 
 # Aliases
 alias rto='press_to_reload -t 300 travis_overview'
