@@ -11,11 +11,18 @@ find "$REPO_PATH" -maxdepth 1 -type f \( -iname '.*' ! -iname '.travis.yml' ! -i
     | xargs -I {} ln -fs "{}" "${HOME}/"
 
 NESTED=$(find "$REPO_PATH" -mindepth 2 -type f \( -iname '*' ! -ipath '*.git/*' \))
+
 echo "${NESTED}" \
     | xargs dirname \
-    | sed "s@$REPO_PATH/@@g" \
-    | xargs -I {} mkdir -p "${HOME}/{}"
+    | sed "s@$REPO_PATH/@${HOME}/@g" \
+    | xargs -I {} readlink {} \
+    | xargs -I {} echo unlink "{}"
+
+echo "${NESTED}" \
+    | xargs dirname \
+    | sed "s@$REPO_PATH/@${HOME}/@g" \
+    | xargs -I {} echo mkdir -p "{}"
 
 echo "${NESTED}" \
     | sed "s@$REPO_PATH/@@g" \
-    | xargs -I {} ln -fs "${REPO_PATH}/{}" "${HOME}/{}"
+    | xargs -I {} echo ln -fs "${REPO_PATH}/{}" "${HOME}/{}"
