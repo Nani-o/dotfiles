@@ -2,6 +2,7 @@
 
 function update_dotfiles {
   ~/.dotfiles/setup.sh
+  source ~/.zshrc
 }
 
 # Event then action

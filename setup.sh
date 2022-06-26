@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env zsh
 
 REPO_PATH=~/.dotfiles
 REPO_URL="https://github.com/Nani-o/dotfiles"
@@ -19,5 +19,3 @@ echo "${NESTED}" \
 echo "${NESTED}" \
     | sed "s@$REPO_PATH/@@g" \
     | xargs -L 1 -I {} ln -fs "${REPO_PATH}/{}" "${HOME}/{}"
-
-source ~/.zshrc
