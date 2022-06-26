@@ -1,8 +1,7 @@
 # A collection of shell functions
 
 function update_dotfiles {
-  git -C ~/.dotfiles pull
-  source ~/.zshrc
+  ~/.dotfiles/setup.sh
 }
 
 # Event then action
