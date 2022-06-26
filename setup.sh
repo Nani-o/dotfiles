@@ -8,14 +8,14 @@ REPO_URL="https://github.com/Nani-o/dotfiles"
   || git clone "$REPO_URL" "$REPO_PATH"
 
 find "$REPO_PATH" -maxdepth 1 -type f \( -iname '.*' ! -iname '.travis.yml' ! -iname '.gitignore' \) \
-    | xargs -L 1 -I {} ln -fs "{}" "${HOME}/"
+    | xargs -I {} ln -fs "{}" "${HOME}/"
 
 NESTED=$(find "$REPO_PATH" -mindepth 2 -type f \( -iname '*' ! -ipath '*.git/*' \))
 echo "${NESTED}" \
     | xargs dirname \
     | sed "s@$REPO_PATH/@@g" \
-    | xargs -L 1 -I {} mkdir -p "${HOME}/{}"
+    | xargs -I {} mkdir -p "${HOME}/{}"
 
 echo "${NESTED}" \
     | sed "s@$REPO_PATH/@@g" \
-    | xargs -L 1 -I {} ln -fs "${REPO_PATH}/{}" "${HOME}/{}"
+    | xargs -I {} ln -fs "${REPO_PATH}/{}" "${HOME}/{}"
