@@ -1,9 +1,9 @@
 # A collection of shell functions
 
 function update_dotfiles {
-  BEFORE="$(git log -1 --oneline)"
+  BEFORE="$(git -C ~/.dotfiles log -1 --oneline)"
   git -C ~/.dotfiles pull
-  AFTER="$(git log -1 --oneline)"
+  AFTER="$(git -C ~/.dotfiles log -1 --oneline)"
   if [[ "$BEFORE" != "$AFTER" ]]
   then
     ~/.dotfiles/symlinks.sh
