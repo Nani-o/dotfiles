@@ -1,8 +1,5 @@
-# If you come from bash you might have to change your $PATH.
+# Path
 export "PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:/usr/local/sbin:$PATH"
-
-# Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
 
 # Editor
 export EDITOR="$(which nano)"
@@ -18,9 +15,13 @@ fi
 # Make sure HOSTNAME is lowercase
 export HOSTNAME="$(hostname | tr '[:upper:]' '[:lower:]')"
 
-# Set name of the theme to load. Optionally, if you set this to "random"
-# it'll load a random theme each time that oh-my-zsh is loaded.
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
+# Load functions and customs
+source ~/.funcs.sh
+[[ -f ~/.extras.sh ]] && source ~/.extras.sh
+
+# Oh My Zsh
+export ZSH="$HOME/.oh-my-zsh"
+
 ZSH_THEME="powerlevel10k/powerlevel10k"
 export CONTEXT_BACKGROUND=014
 [[ ${HOSTNAME} == "mizuho"* ]] && export CONTEXT_BACKGROUND=014
@@ -28,6 +29,4 @@ export CONTEXT_BACKGROUND=014
 [[ ${HOSTNAME} == "dedinani"* ]] && export CONTEXT_BACKGROUND=001
 source ~/.p10k.zsh
 
-source ~/.funcs.sh
-[[ -f ~/.extras.sh ]] && source ~/.extras.sh
 source $ZSH/oh-my-zsh.sh
