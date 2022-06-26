@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-[[ ! -d "${HOME}/.oh-my-zsh" ]] && sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
+[[ ! -d "${HOME}/.oh-my-zsh" ]] && RUNZSH=no sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
 
 REPO_PATH=~/.dotfiles
 REPO_URL="https://github.com/Nani-o/dotfiles"
