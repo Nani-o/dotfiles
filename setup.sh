@@ -39,5 +39,5 @@ echo "${NESTED}" \
     | sed "s@$REPO_PATH/@@g" \
     | xargs -I {} ln -fs "${REPO_PATH}/{}" "${HOME}/{}"
 
-CURRENT_SHELL=$(ps -ef | grep $$ | grep -v grep | awk '{print $4}')
-[[ "$CURRENT_SHELL" == "zsh" ]] && source ~/.zshrc || exec zsh -l
+echo $0
+#[[ "$CURRENT_SHELL" == "zsh" ]] && source ~/.zshrc || exec zsh -l
