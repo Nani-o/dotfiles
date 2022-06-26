@@ -13,17 +13,17 @@ I use a simple .travis.yml for running shellcheck on my shell functions file and
 Using
 -----
 
-I use an ansible [role](https://github.com/Nani-o/ansible-role-dotfiles) for deploying my dotfiles on my workstations/servers.
-
-For example if your dotfiles is cloned in **~/dotfiles**, you can run :
+I used to run an ansible [role](https://github.com/Nani-o/ansible-role-dotfiles) for deploying my dotfiles, I now use a setup script :
 
 ```Shell
-find ~/dotfiles/ -maxdepth 1 -type f \( -iname '.*' ! -iname '.travis.yml' \) \
-    | xargs readlink -f \
-    | xargs -L 1 -I {} echo ln -s "{}" "${HOME}/"
+zsh -ec "$(wget https://raw.githubusercontent.com/Nani-o/dotfiles/master/setup.sh -O -)"
 ```
 
-It will just output the **ln -s** commands, copy paste them or remove the echo to make actual symlinks.
+What this script does is :
+  - Installing Oh My Zsh
+  - Installing powelevel10k theme
+  - Cloning this repo in HOME/.dotfiles
+  - Link all dotfiles from this repo in the HOME folder
 
 License
 -------
