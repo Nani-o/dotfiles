@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env zsh -e
 
 [[ ! -d "${HOME}/.oh-my-zsh" ]] && RUNZSH=no sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
 
