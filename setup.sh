@@ -16,13 +16,13 @@ echo "${NESTED}" \
     | xargs dirname \
     | sed "s@$REPO_PATH/@${HOME}/@g" \
     | xargs -I {} readlink {} \
-    | xargs -I {} echo unlink "{}"
+    | xargs -I {} unlink "{}"
 
 echo "${NESTED}" \
     | xargs dirname \
     | sed "s@$REPO_PATH/@${HOME}/@g" \
-    | xargs -I {} echo mkdir -p "{}"
+    | xargs -I {} mkdir -p "{}"
 
 echo "${NESTED}" \
     | sed "s@$REPO_PATH/@@g" \
-    | xargs -I {} echo ln -fs "${REPO_PATH}/{}" "${HOME}/{}"
+    | xargs -I {} ln -fs "${REPO_PATH}/{}" "${HOME}/{}"
