@@ -39,5 +39,4 @@ echo "${NESTED}" \
     | sed "s@$REPO_PATH/@@g" \
     | xargs -I {} ln -fs "${REPO_PATH}/{}" "${HOME}/{}"
 
-echo "a${0}a"
-[[ "$0" == "" ]] && exec zsh -l
+[[ "$0" == "zsh" ]] && exec zsh -l
