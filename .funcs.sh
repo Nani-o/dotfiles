@@ -367,7 +367,7 @@ function tput_colors {
 }
 
 # ANSI Escape sequence for color stored as variables with tput
-if $(which tput)
+if which tput > /dev/null
 then
     TXTBLACK=$(tput setaf 0)
     TXTRED=$(tput setaf 1)
