@@ -16,7 +16,8 @@ echo "${NESTED}" \
     | sed "s@$REPO_PATH/@@g" \
     | xargs -I {} ln -fs "${REPO_PATH}/{}" "${HOME}/{}"
 
-find "${HOME}" -maxdepth 3 -xtype l \
-    | xargs -I {} readlink {} \
-    | grep "${HOME}/.dotfiles"
-    | xargs -I {} unlink "{}"
+while read -r broken_link
+do
+    target=$(readlink "$broken_link")
+    [[ "$target" == "${HOME}/.dotfiles/"* ]] && unlink "$broken_link"
+done <<< "$(find "${HOME}" -maxdepth 3 -type l ! -exec test -e {} \; -print)"
