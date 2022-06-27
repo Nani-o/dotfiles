@@ -10,15 +10,13 @@ NESTED=$(find "$REPO_PATH" -mindepth 2 -type f \( -iname '*' ! -ipath '*.git/*' 
 echo "${NESTED}" \
     | xargs dirname \
     | sed "s@$REPO_PATH/@${HOME}/@g" \
-    | xargs -I {} readlink "{}" \
-    | sed "s@$REPO_PATH/@${HOME}/@g" \
-    | xargs -I {} unlink "{}"
-
-echo "${NESTED}" \
-    | xargs dirname \
-    | sed "s@$REPO_PATH/@${HOME}/@g" \
     | xargs -I {} mkdir -p "{}"
 
 echo "${NESTED}" \
     | sed "s@$REPO_PATH/@@g" \
     | xargs -I {} ln -fs "${REPO_PATH}/{}" "${HOME}/{}"
+
+find "${HOME}" -maxdepth 3 -xtype l \
+    | xargs -I {} readlink {} \
+    | grep "${HOME}/.dotfiles"
+    | xargs -I {} unlink "{}"
