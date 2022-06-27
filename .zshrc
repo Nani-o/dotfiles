@@ -16,7 +16,11 @@ fi
 export HOSTNAME="$(hostname | tr '[:upper:]' '[:lower:]')"
 
 # Load functions and customs
-source ~/.funcs/*.sh
+for file in ~/.funcs/* ; do
+  if [ -f "$file" ] ; then
+    . "$file"
+  fi
+done
 [[ -f ~/.extras.sh ]] && source ~/.extras.sh
 
 # Oh My Zsh
