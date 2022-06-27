@@ -4,7 +4,7 @@ function dot {
     __update_dotfiles
     ;;
   *)
-    echo "dot: $1 command unrecognized"
+    echo "dot: '$1' command unrecognized"
     ;;
   esac
 }
