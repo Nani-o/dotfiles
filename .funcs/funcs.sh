@@ -1,16 +1,4 @@
 # A collection of shell functions
-
-function update_dotfiles {
-  BEFORE="$(git -C ~/.dotfiles log -1 --oneline)"
-  git -C ~/.dotfiles pull
-  AFTER="$(git -C ~/.dotfiles log -1 --oneline)"
-  if [[ "$BEFORE" != "$AFTER" ]]
-  then
-    ~/.dotfiles/symlinks.sh
-    source ~/.zshrc
-  fi
-}
-
 # Event then action
 
 function git_pull_then_playbook {
