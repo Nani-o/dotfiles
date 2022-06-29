@@ -15,10 +15,6 @@ fi
 # Make sure HOSTNAME is lowercase
 export HOSTNAME="$(hostname | tr '[:upper:]' '[:lower:]')"
 
-# Load functions and customs
-source ~/.funcs.sh
-[[ -f ~/.extras.sh ]] && source ~/.extras.sh
-
 # Oh My Zsh
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -28,5 +24,9 @@ export CONTEXT_BACKGROUND=014
 [[ ${HOSTNAME} == "pi"* ]] && export CONTEXT_BACKGROUND=002
 [[ ${HOSTNAME} == "dedinani"* ]] && export CONTEXT_BACKGROUND=001
 source ~/.p10k.zsh
+
+# Load functions and customs
+source ~/.funcs.sh
+[[ -f ~/.extras.sh ]] && source ~/.extras.sh
 
 source $ZSH/oh-my-zsh.sh
