@@ -1,16 +1,4 @@
 # A collection of shell functions
-
-function update_dotfiles {
-  BEFORE="$(git -C ~/.dotfiles log -1 --oneline)"
-  git -C ~/.dotfiles pull
-  AFTER="$(git -C ~/.dotfiles log -1 --oneline)"
-  if [[ "$BEFORE" != "$AFTER" ]]
-  then
-    ~/.dotfiles/symlinks.sh
-    source ~/.zshrc
-  fi
-}
-
 # Event then action
 
 function git_pull_then_playbook {
@@ -24,74 +12,6 @@ function git_pull_then_playbook {
       ansible-playbook "${2}"
     fi
   done
-}
-
-# Open file in editor
-
-function s {
-    FILES_PATH="."
-    if [[ -d "$1" ]]; then
-        FILES_PATH="$(cd "$1" && pwd)"
-    elif [[ -f "$1" || ! -z "$1" ]]; then
-        "$EDITOR" "$1"
-        return
-    fi
-
-    FILE_TO_OPEN="$(find "$FILES_PATH" -type f -not -path '*/\.*' | \
-        fzf --reverse --preview 'bat --color=always {}' --preview-window down:85%)"
-    [[ -f "$FILE_TO_OPEN" ]] && $EDITOR "$FILE_TO_OPEN"
-}
-
-# History search
-
-function h {
-    COMMAND=($(history | sed -E 's/^\ *[0-9]*\ *([0-9]*\/){2}[0-9]{4}\ [0-9]{2}:[0-9]{2}\ *//g' | tac | fzf --layout=reverse))
-    clear
-    echo "${TXTCYAN}Executing${TXTNORMAL} :" "${COMMAND[@]}"
-    eval "${COMMAND[@]}" # ${=COMMAND}  # Zsh word splitting see : http://zsh.sourceforge.net/FAQ/zshfaq03.html
-}
-
-# Folder navigation
-
-if which fzf > /dev/null
-then
-    unalias d 2>/dev/null
-    function d {
-        RECENT_FOLDERS=$(dirs -v | sed '1d')
-        NB_RECENT_FOLDERS=$(echo "${RECENT_FOLDERS}" | wc -l)
-        PREVIEW_WINDOW_SIZE=$(($(tput lines)-NB_RECENT_FOLDERS-4))
-        PREVIEW_COMMAND="tree -L 1 -C {}"
-        cd "$(echo "${RECENT_FOLDERS}" | \
-                sed 's/[0-9]*[[:space:]]//' | \
-                xargs -L 1 -I {} -P 1 bash -c 'echo {}' | \
-                fzf --layout=reverse --preview-window down:"${PREVIEW_WINDOW_SIZE}" --preview="${PREVIEW_COMMAND}")" || return
-    }
-fi
-
-function c {
-    FILES_PATH="."
-    if [[ -d "$1" ]]; then
-        FILES_PATH="$(cd "$1" && pwd)"
-    elif [[ -f "$1" || ! -z "$1" ]]; then
-        "$EDITOR" "$1"
-        return
-    fi
-    while true
-    do
-        FILES_TO_DELETE="$(find -L "$FILES_PATH" -mindepth 1 -not -path '*/\.*' | \
-                        fzf --reverse -m --preview 'du -Lsh {}' --preview-window up:1%)"
-        clear
-        [[ ${FILES_TO_DELETE} == "" ]] && break
-        echo "You are about to run :"
-        echo "$FILES_TO_DELETE" | tr '\n' '\0' | xargs -0 -L 1 -P 1 -I {} echo rm -rf "{}"
-        echo
-        echo -n "This will free : "
-        echo "$FILES_TO_DELETE" | tr '\n' '\0' | xargs -0 -P 1 du -ch | tail -1 | awk '{print $1}'
-        echo -n "Are you sure ? [y/n] : "
-        read -r CHOICE
-        CHOICE="$(echo $CHOICE | tr 'a-z' 'A-Z')"
-        [[ ${CHOICE} == "Y" ]] && echo "$FILES_TO_DELETE" | tr '\n' '\0' | xargs -0 -L 1 -P 1 -I {} rm -rf "{}"
-    done
 }
 
 # Wrapper for reloading a screen with a command at any hit key
@@ -292,9 +212,6 @@ function device_as_screen {
     screen_ctl cmd "${device_name}" "${@}"
 }
 
-alias iphone='device_as_screen iphone'
-alias ipad='device_as_screen ipad'
-
 # Tmux
 
 function dshell {
@@ -349,50 +266,3 @@ function video2gif {
     ffmpeg -v warning -i $1 -i $palette -lavfi "$filters [x]; [x][1:v] paletteuse" -y $2
     rm $palette
 }
-
-# Chart for tput colors
-# inspired by https://linuxtidbits.wordpress.com/2008/08/11/output-color-on-bash-scripts/
-
-function tput_colors {
-    local REG CMD LBL TPT
-    printf "%s%-10s%-10s%-10s%-10s%s\n" "${TXTBOLD}" regular bold underline tput-command-colors "${TXTNORMAL}"
-
-    for i in $(seq 1 7); do
-        REG="$(tput setaf "${i}")"
-        CMD="\$(tput setaf ${i})"
-        printf "%s%-10s%s" "${REG}" "Text" "${TXTNORMAL}"
-        printf "%s%s%-10s%s" "${REG}" "${TXTBOLD}" "Text" "${TXTNORMAL}"
-        printf "%s%s%s%s" "${REG}" "${TXTUNDERLINE}" "Text" "${TXTNORMAL}"
-        printf "%21s\n" "${CMD}"
-    done
-    for item in "Bold:bold" "Underline:smul" "Reset:sgr0"; do
-        LBL="$(echo ${item} | cut -d ':' -f1)"
-        TPT="$(echo ${item} | cut -d ':' -f2)"
-        printf "%-30s%s\n" "${LBL}" "\$(tput ${TPT})"
-    done
-}
-
-# ANSI Escape sequence for color stored as variables with tput
-if which tput > /dev/null
-then
-    TXTBLACK=$(tput setaf 0)
-    TXTRED=$(tput setaf 1)
-    TXTGREEN=$(tput setaf 2)
-    TXTLIME_YELLOW=$(tput setaf 190)
-    TXTYELLOW=$(tput setaf 3)
-    TXTPOWDER_BLUE=$(tput setaf 153)
-    TXTBLUE=$(tput setaf 4)
-    TXTMAGENTA=$(tput setaf 5)
-    TXTCYAN=$(tput setaf 6)
-    TXTWHITE=$(tput setaf 7)
-    TXTBLINK=$(tput blink)
-    TXTREVERSE=$(tput smso)
-    TXTBOLD=$(tput bold)
-    TXTUNDERLINE=$(tput smul)
-    TXTNORMAL=$(tput sgr0)
-fi
-
-# Aliases
-alias rto='press_to_reload -t 300 travis_overview'
-alias lg='lazygit'
-alias lzd='lazydocker'
