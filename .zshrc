@@ -26,7 +26,11 @@ export CONTEXT_BACKGROUND=014
 source ~/.p10k.zsh
 
 # Load functions and customs
-source ~/.funcs.sh
+for file in ~/.funcs/* ; do
+  if [ -f "$file" ] ; then
+    . "$file"
+  fi
+done
 [[ -f ~/.extras.sh ]] && source ~/.extras.sh
 
 source $ZSH/oh-my-zsh.sh
