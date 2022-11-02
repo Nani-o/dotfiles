@@ -266,3 +266,9 @@ function video2gif {
     ffmpeg -v warning -i $1 -i $palette -lavfi "$filters [x]; [x][1:v] paletteuse" -y $2
     rm $palette
 }
+
+# Text
+
+function remove_blank_lines {
+    sed -i '/^[[:space:]]*$/d' "$1"
+}
