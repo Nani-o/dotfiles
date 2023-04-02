@@ -14,6 +14,7 @@ function setup_workstation {
     if ! exists brew; then
         echo "[bash] Installing Homebrew..."
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        source ~/.zshrc
     else
         echo "[bash] Homebrew is already installed"
     fi
