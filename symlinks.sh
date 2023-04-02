@@ -5,7 +5,7 @@ REPO_PATH=~/.dotfiles
 find "$REPO_PATH" -maxdepth 1 -type f \( -iname '.*' ! -iname '.travis.yml' ! -iname '.gitignore' \) \
     | xargs -I {} ln -fs "{}" "${HOME}/"
 
-NESTED=$(find "$REPO_PATH" -mindepth 2 -type f \( -iname '*' ! -ipath '*.git/*' \))
+NESTED=$(find "$REPO_PATH" -mindepth 2 -type f \( -iname '*' -ipath ${REPO_PATH}'/.*/*' ! -ipath '*.git/*' \))
 
 while read -r broken_link
 do
