@@ -36,5 +36,3 @@ function install_pipx_packages () {
         fi
     done
 }
-
-setup_workstation
