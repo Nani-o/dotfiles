@@ -10,7 +10,9 @@ function exists () {
 }
 
 function setup_workstation {
-    if [[ -f /proc/sys/fs/binfmt_misc/WSLInterop && "$(sha1sum $HOME/.dotfiles/other/wsl.conf)" != "$(sha1sum /etc/wsl.conf)" ]]; then
+    wsl_conf_custom_sha1="$(sha1sum $HOME/.dotfiles/other/wsl.conf 2>/dev/null | awk '{print $1}')"
+    wsl_conf_current_sha1="$(sha1sum /etc/wsl.conf 2>/dev/null | awk '{print $1}')"
+    if [[ -f /proc/sys/fs/binfmt_misc/WSLInterop && $wsl_conf_custom_sha1 != $wsl_conf_current_sha1 ]]; then
         echo "[bash] WSL detected"
         read -q "REPLY?Do you want to install /etc/wsl.conf file ? [y/N]"
         if [[ $REPLY =~ ^[Yy]$ ]]; then
@@ -55,7 +57,7 @@ function setup_wsl () {
     sudo cp $HOME/.dotfiles/other/wsl.conf /etc/wsl.conf
     read -q "REPLY?Do you want to stop WSL in order to changes to be applied ? [y/N]"
     if [[ $REPLY =~ ^[Yy]$ ]]; then
-        wsl --shutdown
+        wsl.exe --shutdown
     fi
 }
 
