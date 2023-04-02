@@ -1,12 +1,28 @@
 # Path
 export "PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:/usr/local/sbin:$PATH"
 
+if [[ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]]; then
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
+if [[ -f "/opt/homebrew/bin/brew" ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
 # Editor
 export EDITOR="$(which nano)"
 if [[ -f '/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl' ]];
 then
     export EDITOR='/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl'
     alias subl='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
+elif [[ -f '/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code' ]];
+then
+    export EDITOR='/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code'
+    alias code='/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code'
+elif [[ -f '/mnt/c/Users/Nani/AppData/Local/Programs/Microsoft VS Code/bin/code' ]];
+then
+    export EDITOR='/mnt/c/Users/Nani/AppData/Local/Programs/Microsoft VS Code/bin/code'
+    alias code='/mnt/c/Users/Nani/AppData/Local/Programs/Microsoft VS Code/bin/code'
 fi
 
 # Set TERM when not inside TMUX
