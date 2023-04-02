@@ -1,16 +1,33 @@
+#!/usr/bin/env zsh
+
+# Test if binary exists using zsh
+function exists () {
+    if [[ -x "$(command -v $1)" ]]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
 function setup_workstation {
     # Install Homebrew
-    if test ! $(which brew); then
-        echo "Installing Homebrew..."
+    if ! exists brew; then
+        echo "[bash] Installing Homebrew..."
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    else
+        echo "[bash] Homebrew is already installed"
     fi
 
+    echo "[brew] Installing Homebrew packages..."
     brew bundle --file=$HOME/.dotfiles/Brewfile
+    rm -rf $HOME/.dotfiles/Brewfile.lock.json
 
     # Install pipx
-    if test ! $(which pipx); then
-        echo "Installing pipx..."
+    if ! exists pipx; then
+        echo "[pip3] Installing pipx..."
         pip3 install pipx
+    else
+        echo "[pip3] pipx is already installed"
     fi
     install_ansible
 }
