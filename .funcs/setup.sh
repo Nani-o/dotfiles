@@ -10,7 +10,7 @@ function exists () {
 }
 
 function setup_workstation {
-    if [[ -f /proc/sys/fs/binfmt_misc/WSLInterop && "$(sha1sum $HOME/.dotfiles/files/wsl.conf)" != "$(sha1sum /etc/wsl.conf)" ]]; then
+    if [[ -f /proc/sys/fs/binfmt_misc/WSLInterop && "$(sha1sum $HOME/.dotfiles/other/wsl.conf)" != "$(sha1sum /etc/wsl.conf)" ]]; then
         echo "[bash] WSL detected"
         read -q "REPLY?Do you want to install /etc/wsl.conf file ? [y/N]"
         if [[ $REPLY =~ ^[Yy]$ ]]; then
@@ -52,7 +52,7 @@ function install_ansible () {
 
 function setup_wsl () {
     echo "[bash] Installing /etc/wsl.conf file..."
-    sudo cp $HOME/.dotfiles/files/wsl.conf /etc/wsl.conf
+    sudo cp $HOME/.dotfiles/other/wsl.conf /etc/wsl.conf
     read -q "REPLY?Do you want to stop WSL in order to changes to be applied ? [y/N]"
     if [[ $REPLY =~ ^[Yy]$ ]]; then
         wsl --shutdown
