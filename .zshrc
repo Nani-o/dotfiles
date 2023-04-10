@@ -28,6 +28,11 @@ fi
 # Set TERM when not inside TMUX
 [[ $TMUX = "" ]] && export TERM="xterm-256color"
 
+# Set locales
+export LC_ALL="en_US.UTF-8"
+export LC_CTYPE="en_US.UTF-8"
+export LANG="en_US.UTF-8"
+
 # Make sure HOSTNAME is lowercase
 export HOSTNAME="$(hostname | tr '[:upper:]' '[:lower:]')"
 
