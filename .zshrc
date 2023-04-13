@@ -44,7 +44,8 @@ export CONTEXT_BACKGROUND=014
 [[ ${HOSTNAME} == "mizuho"* ]] && export CONTEXT_BACKGROUND=014
 [[ ${HOSTNAME} == "pi"* ]] && export CONTEXT_BACKGROUND=002
 [[ ${HOSTNAME} == "dedinani"* ]] && export CONTEXT_BACKGROUND=001
-source ~/.p10k.zsh
+
+[[ -n "$VSCODE_PROXY_URI" ]] && source ~/.p10k-vscode.zsh || source ~/.p10k.zsh
 
 # Load functions and customs
 for file in ~/.funcs/* ; do
