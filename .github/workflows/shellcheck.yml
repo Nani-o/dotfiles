@@ -1,5 +1,5 @@
 ---
-name: Docker Image CI
+name: Checks our dotfiles
 on:
   push:
     branches: [ "master" ]
@@ -11,7 +11,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Run checks 
+    - name: Run ShellCheck 
       run: |
         find . -name "*.sh" | xargs shellcheck -s bash -S error
 
