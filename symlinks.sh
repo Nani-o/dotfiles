@@ -19,7 +19,7 @@ NESTED_FOLDERS=$(echo "${NESTED_FILES}" | xargs dirname | sort | uniq)
 # Create root level symlinks
 while read -r FILE
 do
-    RELATIVE_PATH=$(echo "${FILE}" | sed "s@${REPO_PATH}/@@g")
+    RELATIVE_PATH="${FILE//${REPO_PATH}\//}"
     ln -fs "${REPO_PATH}/${RELATIVE_PATH}" "${HOME}/${RELATIVE_PATH}"
     echo "${HOME}/${RELATIVE_PATH}" >> "${TMPFILE}"
 done <<< "${ROOT_FILES}"
@@ -33,13 +33,13 @@ done <<< "${NESTED_FOLDERS}"
 # Create nested symlinks
 while read -r FILE
 do
-    RELATIVE_PATH=$(echo "${FILE}" | sed "s@${REPO_PATH}/@@g")
+    RELATIVE_PATH="${FILE//${REPO_PATH}\//}"
     ln -fs "${REPO_PATH}/${RELATIVE_PATH}" "${HOME}/${RELATIVE_PATH}"
     echo "${HOME}/${RELATIVE_PATH}" >> "${TMPFILE}"
 done <<< "${NESTED_FILES}"
 
 # Remove symlinks that are no longer in the repo
-[[ "${OSTYPE} == *"darwin"* ]] && xargs_flag="" || xargs_flag="--no-run-if-empty"
+[[ "${OSTYPE}" == *"darwin"* ]] && xargs_flag="" || xargs_flag="--no-run-if-empty"
 diff "${TMPFILE}" "${EXISTING_SYMLINKS}" | grep '>' | sed 's/^> //g' | xargs ${xargs_flag} unlink
 
 # Update the list of symlinks installed
