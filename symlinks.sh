@@ -13,7 +13,7 @@ touch "${EXISTING_SYMLINKS}"
 
 # List of files to symlink and folders to create
 ROOT_FILES=$(find "$REPO_PATH" -maxdepth 1 -type f \( -iname '.*' ! -iname '.travis.yml' ! -iname '.gitignore' \))
-NESTED_FILES=$(find "$REPO_PATH" -mindepth 2 -type f \( -iname '*' -ipath ${REPO_PATH}'/.*/*' ! -ipath '*.git/*' \))
+NESTED_FILES=$(find "$REPO_PATH" -mindepth 2 -type f \( -iname '*' -ipath ${REPO_PATH}'/.*/*' ! -ipath '*.git/*' ! -ipath '*.github/workflows/*' \))
 NESTED_FOLDERS=$(echo "${NESTED_FILES}" | xargs dirname | sort | uniq)
 
 # Create root level symlinks
@@ -27,7 +27,7 @@ done <<< "${ROOT_FILES}"
 # Create nested folders
 while read -r FOLDER
 do
-    mkdir -p "${HOME}/${FOLDER}"
+    mkdir -p "${HOME}/${FOLDER//${REPO_PATH}\//}"
 done <<< "${NESTED_FOLDERS}"
 
 # Create nested symlinks
