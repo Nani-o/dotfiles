@@ -14,6 +14,12 @@ function git_pull_then_playbook {
   done
 }
 
+# Wrapper to wait for the user to press a key
+
+function press_to_continue {
+    echo "Press any key to continue..."
+    read -k1
+
 # Wrapper for reloading a screen with a command at any hit key
 
 function press_to_reload {
