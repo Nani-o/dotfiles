@@ -19,6 +19,7 @@ function git_pull_then_playbook {
 function press_to_continue {
     echo "Press any key to continue..."
     read -k1
+}
 
 # Wrapper for reloading a screen with a command at any hit key
 
