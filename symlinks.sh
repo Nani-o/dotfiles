@@ -4,7 +4,7 @@
 REPO_PATH=~/.dotfiles
 
 # Temp file to store symlinks created
-TMPFILE=$(mktemp -t symlinks)
+TMPFILE=$(mktemp -t symlinks.XXXXXXXX)
 trap 'rm -f "$TMPFILE"' EXIT
 
 # Where the symlinks list is stored
