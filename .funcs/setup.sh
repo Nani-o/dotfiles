@@ -64,6 +64,7 @@ function setup_wsl () {
 function install_pipx_packages () {
     # Install pipx packages
     pipx_packages=("$@")
+    # shellcheck disable=SC2068
     for package in "${pipx_packages[@]}"; do
         if pipx list | grep -q $package; then
             echo "[pipx] $package is already installed"
