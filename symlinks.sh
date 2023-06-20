@@ -39,7 +39,8 @@ do
 done <<< "${NESTED_FILES}"
 
 # Remove symlinks that are no longer in the repo
-diff "${TMPFILE}" "${EXISTING_SYMLINKS}" | grep '>' | sed 's/^> //g' | xargs unlink 
+[[ "${OSTYPE} == *"darwin"* ]] && xargs_flag="" || xargs_flag="--no-run-if-empty"
+diff "${TMPFILE}" "${EXISTING_SYMLINKS}" | grep '>' | sed 's/^> //g' | xargs ${xargs_flag} unlink
 
 # Update the list of symlinks installed
 cat "${TMPFILE}" > "${EXISTING_SYMLINKS}"
