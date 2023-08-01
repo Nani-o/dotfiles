@@ -6,6 +6,9 @@ function dot {
   status)
     git -C ~/.dotfiles status
     ;;
+  commit)
+    __commit_and_push_dotfiles "$2"
+    ;;
   *)
     echo "dot: '$1' command unrecognized"
     ;;
@@ -24,11 +27,11 @@ function __update_dotfiles {
 }
 
 function __commit_and_push_dotfiles {
-  # Check if there are any changes in ~/.dotfiles repository
+  [[ ! -z "$1" ]] && commit_args="-m \"$1\""
   if [[ -n $(git -C ~/.dotfiles status --porcelain) ]]
   then
     git -C ~/.dotfiles add .
-    git -C ~/.dotfiles commit
+    git -C ~/.dotfiles commit --author=="Sofiane Medjkoune <sofiane@medjkoune.fr>" $commit_args
     git -C ~/.dotfiles push
   fi
 }
