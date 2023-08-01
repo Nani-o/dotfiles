@@ -3,6 +3,9 @@ function dot {
   update)
     __update_dotfiles
     ;;
+  status)
+    git -C ~/.dotfiles status
+    ;;
   *)
     echo "dot: '$1' command unrecognized"
     ;;
@@ -17,5 +20,15 @@ function __update_dotfiles {
   then
     ~/.dotfiles/symlinks.sh
     source ~/.zshrc
+  fi
+}
+
+function __commit_and_push_dotfiles {
+  # Check if there are any changes in ~/.dotfiles repository
+  if [[ -n $(git -C ~/.dotfiles status --porcelain) ]]
+  then
+    git -C ~/.dotfiles add .
+    git -C ~/.dotfiles commit
+    git -C ~/.dotfiles push
   fi
 }
