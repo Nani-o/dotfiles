@@ -6,7 +6,7 @@ function dot {
   status)
     git -C ~/.dotfiles status
     ;;
-  commit)
+  commi)
     __commit_and_push_dotfiles "$2"
     ;;
   *)
@@ -27,7 +27,7 @@ function __update_dotfiles {
 }
 
 function __commit_and_push_dotfiles {
-  [[ ! -z "$1" ]] && commit_args="-m \"$1\""
+  [[ ! -z "$1" ]] && commit_args="-m $1"
   if [[ -n $(git -C ~/.dotfiles status --porcelain) ]]
   then
     git -C ~/.dotfiles add .
