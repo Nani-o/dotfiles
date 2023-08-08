@@ -6,7 +6,7 @@ function dot {
   status)
     git -C ~/.dotfiles status
     ;;
-  commi)
+  commit|push)
     __commit_and_push_dotfiles "$2"
     ;;
   *)
