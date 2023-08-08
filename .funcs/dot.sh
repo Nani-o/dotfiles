@@ -33,7 +33,7 @@ function __commit_and_push_dotfiles {
     git -C ~/.dotfiles add .
     git -C ~/.dotfiles commit --author=="Sofiane Medjkoune <sofiane@medjkoune.fr>" $commit_args
   fi
-  if [[ -n $(git diff --stat --cached origin/master) ]]
+  if [[ -n $(git -C ~/.dotfiles diff --stat --cached origin/master) ]]
   then
     echo git -C ~/.dotfiles push
   fi
