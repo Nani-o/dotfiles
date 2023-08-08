@@ -35,6 +35,6 @@ function __commit_and_push_dotfiles {
   fi
   if [[ -n $(git -C ~/.dotfiles diff --stat --cached origin/master) ]]
   then
-    echo git -C ~/.dotfiles push
+    git -C ~/.dotfiles push
   fi
 }
