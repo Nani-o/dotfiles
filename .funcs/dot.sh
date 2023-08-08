@@ -17,7 +17,7 @@ function dot {
 
 function __update_dotfiles {
   BEFORE="$(git -C ~/.dotfiles log -1 --oneline)"
-  git -C ~/.dotfiles pull
+  git -C ~/.dotfiles pull --rebase
   AFTER="$(git -C ~/.dotfiles log -1 --oneline)"
   if [[ "$BEFORE" != "$AFTER" ]]
   then
