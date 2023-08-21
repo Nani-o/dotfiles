@@ -21,7 +21,7 @@ jobs:
         [[ "${{ job.status }}" == "success" ]] && STATUS="✅" || STATUS="❎"
         REPOSITORY=$( echo ${{ github.repository }} | cut -d '/' -f 2 )
         MESSAGE="\`\`\`
-        action         : Build of Docker Image
+        action         : Dotfiles checks
         repository     : $REPOSITORY
         commit message : ${{ github.event.head_commit.message }}
         status         : $STATUS
