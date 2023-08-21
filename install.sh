@@ -9,7 +9,7 @@ fi
 REPO_PATH=~/.oh-my-zsh/custom/themes/powerlevel10k
 REPO_URL="https://github.com/romkatv/powerlevel10k"
 
-[[ ! -d "$REPO_PATH" ]] \
+[[ -d "$REPO_PATH" ]] \
   || git clone "$REPO_URL" "$REPO_PATH"
 
 REPO_PATH=~/.dotfiles
