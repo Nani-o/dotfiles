@@ -1,10 +1,8 @@
 #!/bin/zsh -e
 
-which wget > /dev/null
-if [[ "$?" == 0 ]]; then
+if (( $+commands[wget] )); then
   [[ ! -d "${HOME}/.oh-my-zsh" ]] && RUNZSH=no sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
 else
-  echo test
   [[ ! -d "${HOME}/.oh-my-zsh" ]] && RUNZSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 fi
 
