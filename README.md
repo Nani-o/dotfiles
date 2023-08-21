@@ -19,6 +19,12 @@ I used to run an ansible [role](https://github.com/Nani-o/ansible-role-dotfiles)
 zsh -ec "$(wget https://raw.githubusercontent.com/Nani-o/dotfiles/master/install.sh -O -)"
 ```
 
+or :
+
+```Shell
+zsh -ec "$(curl -fsSL https://raw.githubusercontent.com/Nani-o/dotfiles/master/install.sh)"
+```
+
 What this script does is :
   - Installing Oh My Zsh
   - Installing powelevel10k theme

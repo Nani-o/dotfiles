@@ -1,6 +1,11 @@
 #!/bin/zsh -e
 
-[[ ! -d "${HOME}/.oh-my-zsh" ]] && RUNZSH=no sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
+which wget > /dev/null
+if [[ "$?" == 0 ]]; then
+  [[ ! -d "${HOME}/.oh-my-zsh" ]] && RUNZSH=no sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
+else
+  [[ ! -d "${HOME}/.oh-my-zsh" ]] && RUNZSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+fi
 
 REPO_PATH=~/.oh-my-zsh/custom/themes/powerlevel10k
 REPO_URL="https://github.com/romkatv/powerlevel10k"
