@@ -29,7 +29,7 @@ function __update_dotfiles {
   if [[ "$BEFORE" != "$AFTER" ]]
   then
     ~/.dotfiles/symlinks.sh
-    exec zsh -l
+    __reload_dotfiles
   fi
 }
 
@@ -39,6 +39,7 @@ function __commit_and_push_dotfiles {
   then
     git -C ~/.dotfiles add .
     git -C ~/.dotfiles commit --author=="Sofiane Medjkoune <sofiane@medjkoune.fr>" $commit_args
+    __reload_dotfiles
   fi
   if [[ -n $(git -C ~/.dotfiles diff --stat --cached origin/master) ]]
   then
