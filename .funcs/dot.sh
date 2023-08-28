@@ -22,7 +22,7 @@ function __update_dotfiles {
   if [[ "$BEFORE" != "$AFTER" ]]
   then
     ~/.dotfiles/symlinks.sh
-    source ~/.zshrc
+    exec zsh -l
   fi
 }
 
