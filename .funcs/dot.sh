@@ -9,10 +9,17 @@ function dot {
   commit|push)
     __commit_and_push_dotfiles "$2"
     ;;
+  reload)
+    __reload_dotfiles
+    ;;
   *)
     echo "dot: '$1' command unrecognized"
     ;;
   esac
+}
+
+function __reload_dotfiles {
+  exec zsh -l
 }
 
 function __update_dotfiles {
