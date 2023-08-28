@@ -1,6 +1,6 @@
 function dot {
   case $1 in
-  update)
+  update|pull)
     __update_dotfiles
     ;;
   status)
