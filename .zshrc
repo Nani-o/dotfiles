@@ -47,6 +47,8 @@ export CONTEXT_BACKGROUND=014
 
 [[ -n "$VSCODE_PROXY_URI" ]] && source ~/.p10k-vscode.zsh || source ~/.p10k.zsh
 
+source $ZSH/oh-my-zsh.sh
+
 # Load functions and customs
 for file in ~/.funcs/* ; do
   if [ -f "$file" ] ; then
@@ -54,5 +56,3 @@ for file in ~/.funcs/* ; do
   fi
 done
 [[ -f ~/.extras.sh ]] && source ~/.extras.sh
-
-source $ZSH/oh-my-zsh.sh

@@ -27,7 +27,8 @@ function h {
 
 if which fzf > /dev/null
 then
-    unalias d 2>/dev/null
+    unalias d 2> /dev/null
+    unset -f d 2> /dev/null
     function d {
         RECENT_FOLDERS=$(dirs -v | sed '1d')
         NB_RECENT_FOLDERS=$(echo "${RECENT_FOLDERS}" | wc -l)
@@ -35,7 +36,7 @@ then
         PREVIEW_COMMAND="tree -L 1 -C {}"
         cd "$(echo "${RECENT_FOLDERS}" | \
                 sed 's/[0-9]*[[:space:]]//' | \
-                xargs -L 1 -I {} -P 1 bash -c 'echo {}' | \
+                xargs -I {} -P 1 bash -c 'echo {}' | \
                 fzf --layout=reverse --preview-window down:"${PREVIEW_WINDOW_SIZE}" --preview="${PREVIEW_COMMAND}")" || return
     }
 fi
@@ -55,13 +56,13 @@ function c {
         clear
         [[ ${FILES_TO_DELETE} == "" ]] && break
         echo "You are about to run :"
-        echo "$FILES_TO_DELETE" | tr '\n' '\0' | xargs -0 -L 1 -P 1 -I {} echo rm -rf "{}"
+        echo "$FILES_TO_DELETE" | tr '\n' '\0' | xargs -0 -P 1 -I {} echo rm -rf "{}"
         echo
         echo -n "This will free : "
         echo "$FILES_TO_DELETE" | tr '\n' '\0' | xargs -0 -P 1 du -ch | tail -1 | awk '{print $1}'
         echo -n "Are you sure ? [y/n] : "
         read -r CHOICE
         CHOICE="$(echo $CHOICE | tr 'a-z' 'A-Z')"
-        [[ ${CHOICE} == "Y" ]] && echo "$FILES_TO_DELETE" | tr '\n' '\0' | xargs -0 -L 1 -P 1 -I {} rm -rf "{}"
+        [[ ${CHOICE} == "Y" ]] && echo "$FILES_TO_DELETE" | tr '\n' '\0' | xargs -0 -P 1 -I {} rm -rf "{}"
     done
 }
