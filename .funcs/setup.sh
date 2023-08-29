@@ -74,3 +74,29 @@ function install_pipx_packages () {
         fi
     done
 }
+
+function update {
+  echo "${TXTCYAN}update dotfiles${TXTNORMAL}"
+  dot update
+  echo -e "\n${TXTCYAN}omz update${TXTNORMAL}"
+  omz update
+  if which brew > /dev/null
+  then
+    echo -e "\n${TXTCYAN}brew upgrade${TXTNORMAL}"
+    brew upgrade
+  fi
+  if which apt > /dev/null
+  then
+    echo -e "\n${TXTCYAN}apt update${TXTNORMAL}"
+    sudo apt -y update
+    echo -e "\n${TXTCYAN}apt upgrade${TXTNORMAL}"
+    sudo apt -y upgrade
+    echo -e "\n${TXTCYAN}apt autoremove${TXTNORMAL}"
+    sudo apt -y autoremove
+  fi
+  if which softwareupdate > /dev/null
+  then
+    echo -e "\n${TXTCYAN}softwareupdate -i -a${TXTNORMAL}"
+    sudo softwareupdate -i -a
+  fi
+}
