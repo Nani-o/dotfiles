@@ -6,8 +6,11 @@ function dot {
   status)
     git -C ~/.dotfiles status
     ;;
-  commit|push)
-    __commit_and_push_dotfiles "$2"
+  commit)
+    __commit_dotfiles "$2"
+    ;;
+  push)
+    __push_dotfiles
     ;;
   reload)
     __reload_dotfiles
@@ -33,7 +36,7 @@ function __update_dotfiles {
   fi
 }
 
-function __commit_and_push_dotfiles {
+function __commit_dotfiles {
   [[ ! -z "$1" ]] && commit_args="-m $1"
   if [[ -n $(git -C ~/.dotfiles status --porcelain) ]]
   then
@@ -41,6 +44,8 @@ function __commit_and_push_dotfiles {
     git -C ~/.dotfiles commit --author=="Sofiane Medjkoune <sofiane@medjkoune.fr>" $commit_args
     __reload_dotfiles
   fi
+}
+function __push_dotfiles {
   if [[ -n $(git -C ~/.dotfiles diff --stat --cached origin/master) ]]
   then
     git -C ~/.dotfiles push
