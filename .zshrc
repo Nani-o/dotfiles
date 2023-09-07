@@ -3,6 +3,7 @@ export "PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:/usr/local/sbin:$PATH"
 
 if [[ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]]; then
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  alias brew='sudo -Hi --preserve-env="https_proxy,http_proxy,ftp_proxy,PATH" -u brew -- /home/linuxbrew/.linuxbrew/bin/brew'
 fi
 
 if [[ -f "/opt/homebrew/bin/brew" ]]; then
