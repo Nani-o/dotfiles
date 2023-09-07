@@ -1,51 +1,66 @@
 function dot {
   case $1 in
   update|pull)
-    __update_dotfiles
+    __dot_pull
     ;;
   status)
     git -C ~/.dotfiles status
     ;;
   commit)
-    __commit_dotfiles "$2"
+    __dot_commit "$2"
     ;;
   push)
-    __push_dotfiles
+    __dot_push
     ;;
   reload)
-    __reload_dotfiles
+    __dot_reload
+    ;;
+  help)
+    __dot_help
     ;;
   *)
-    echo "dot: '$1' command unrecognized"
+    echo -e "dot: '$1' is not a valid subcommand.\n"
+    __dot_help
     ;;
   esac
 }
 
-function __reload_dotfiles {
+function __dot_help {
+    echo -e "usage: dot [subcommand]\n
+Theses are dot subcommands:
+  update:   download the latest commits of dotfiles and reload zsh
+  status:   show the git status of dotfiles
+  commit:   commit the local changes of dotfiles
+  push:     push the local changes of dotfiles
+  help:     show this help message
+  reload:   reload zsh"
+}
+
+function __dot_reload {
   exec zsh -l
 }
 
-function __update_dotfiles {
+function __dot_pull {
   BEFORE="$(git -C ~/.dotfiles log -1 --oneline)"
   git -C ~/.dotfiles pull --rebase
   AFTER="$(git -C ~/.dotfiles log -1 --oneline)"
   if [[ "$BEFORE" != "$AFTER" ]]
   then
     ~/.dotfiles/symlinks.sh
-    __reload_dotfiles
+    __dot_reload
   fi
 }
 
-function __commit_dotfiles {
+function __dot_commit {
   [[ ! -z "$1" ]] && commit_args="-m $1"
   if [[ -n $(git -C ~/.dotfiles status --porcelain) ]]
   then
     git -C ~/.dotfiles add .
     git -C ~/.dotfiles commit --author=="Sofiane Medjkoune <sofiane@medjkoune.fr>" $commit_args
-    __reload_dotfiles
+    __dot_reload
   fi
 }
-function __push_dotfiles {
+function __dot_push {
   if [[ -n $(git -C ~/.dotfiles diff --stat --cached origin/master) ]]
   then
     git -C ~/.dotfiles push
