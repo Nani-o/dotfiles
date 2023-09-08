@@ -85,6 +85,11 @@ function update {
     echo -e "\n${TXTCYAN}brew upgrade${TXTNORMAL}"
     brew upgrade
   fi
+  if which pipx > /dev/null
+  then
+    echo -e "\n${TXTCYAN}pipx upgrade-all${TXTNORMAL}"
+    pipx upgrade-all
+  fi
   if which apt > /dev/null
   then
     echo -e "\n${TXTCYAN}apt update${TXTNORMAL}"
