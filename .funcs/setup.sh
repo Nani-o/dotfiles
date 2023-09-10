@@ -80,17 +80,17 @@ function update {
   dot update
   echo -e "\n${TXTCYAN}omz update${TXTNORMAL}"
   omz update
-  if which brew > /dev/null
+  if exists brew
   then
     echo -e "\n${TXTCYAN}brew upgrade${TXTNORMAL}"
     brew upgrade
   fi
-  if which pipx > /dev/null
+  if exists pipx
   then
     echo -e "\n${TXTCYAN}pipx upgrade-all${TXTNORMAL}"
     pipx upgrade-all
   fi
-  if which apt > /dev/null
+  if [[ -f /etc/debian_version ]]
   then
     echo -e "\n${TXTCYAN}apt update${TXTNORMAL}"
     sudo apt -y update
@@ -99,7 +99,7 @@ function update {
     echo -e "\n${TXTCYAN}apt autoremove${TXTNORMAL}"
     sudo apt -y autoremove
   fi
-  if which softwareupdate > /dev/null
+  if [[ "$OSTYPE" == "darwin"* ]]
   then
     echo -e "\n${TXTCYAN}softwareupdate -i -a${TXTNORMAL}"
     sudo softwareupdate -i -a
