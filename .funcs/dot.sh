@@ -12,6 +12,9 @@ function dot {
   push)
     __dot_push
     ;;
+  link)
+    ~/.dotfiles/symlinks.sh
+    ;;
   reload)
     __dot_reload
     ;;
