@@ -19,9 +19,15 @@ function sheets {
 function __sheets_new {
     echo -n "How do you want to name these file : "
     read FILE
-    [[ -f ~/.cheatsheets/"$FILE".md ]] \
-      && echo "Already exists" \
-      || nano "~/.cheatsheets/$FILE".md
+    if [[ -f ~/.cheatsheets/"$FILE".md ]]
+    then
+        echo "Already exists"
+    else
+        [[ "$FILE" == *.md ]] \
+          && nano "~/.dotfiles/.cheatsheets/$FILE" \
+          || nano "~/.dotfiles/.cheatsheets/$FILE".md
+        dot link
+    fi
 }
 
 function __sheets_help {
