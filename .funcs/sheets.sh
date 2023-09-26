@@ -48,7 +48,7 @@ function __preview_sheets_from_title {
 }
 
 function __sheets {
-    sheets_list=$(fd . ~/.cheatsheets --type f | sed 's/.*.cheatsheets\///g' | sed 's@_@ | @' | column -t | sed 's/_/ /g' | sed 's/.md$//g')
+    sheets_list=$(fd . ~/.cheatsheets -e md | sed 's/.*.cheatsheets\///g' | sed 's@_@ | @' | column -t | sed 's/_/ /g' | sed 's/.md$//g')
     sheet_file=$(echo "$sheets_list" | fzf --preview "source ~/.funcs/sheets.sh;__preview_sheets_from_title {}" \
                               --preview-window right,70% --ansi --no-scrollbar)
 
