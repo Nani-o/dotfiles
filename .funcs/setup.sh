@@ -41,16 +41,23 @@ function setup_workstation {
         echo "[pip3] pipx is already installed"
     fi
     install_ansible
+
+    pipx_packages=(
+        rich
+        httpie
+    )
+
+    install_pipx_packages
 }
 
 function install_ansible () {
     # Install Ansible
-    pipx_packages=(
+    ansible_pipx_packages=(
         ansible-core
         ansible-lint
     )
     # shellcheck disable=SC2068
-    install_pipx_packages ${pipx_packages[@]}
+    install_pipx_packages ${ansible_pipx_packages[@]}
 }
 
 function setup_wsl () {
@@ -76,32 +83,32 @@ function install_pipx_packages () {
 }
 
 function update {
-  echo "${TXTCYAN}update dotfiles${TXTNORMAL}"
+  rich "update dotfiles" --rule --rule-style "green" --style "green"
   dot update
-  echo -e "\n${TXTCYAN}omz update${TXTNORMAL}"
-  omz update
+  rich "omz update" --rule --rule-style "green" --style "green"
+  omz update --unattended
   if exists brew
   then
-    echo -e "\n${TXTCYAN}brew upgrade${TXTNORMAL}"
+    rich "brew upgrade" --rule --rule-style "green" --style "green"
     brew upgrade
   fi
   if exists pipx
   then
-    echo -e "\n${TXTCYAN}pipx upgrade-all${TXTNORMAL}"
+    rich "pipx upgrade-all" --rule --rule-style "green" --style "green"
     pipx upgrade-all
   fi
   if [[ -f /etc/debian_version ]]
   then
-    echo -e "\n${TXTCYAN}apt update${TXTNORMAL}"
+    rich "apt update" --rule --rule-style "green" --style "green"
     sudo apt -y update
-    echo -e "\n${TXTCYAN}apt upgrade${TXTNORMAL}"
+    rich "apt upgrade" --rule --rule-style "green" --style "green"
     sudo apt -y upgrade
-    echo -e "\n${TXTCYAN}apt autoremove${TXTNORMAL}"
+    rich "apt autoremove" --rule --rule-style "green" --style "green"
     sudo apt -y autoremove
   fi
   if [[ "$OSTYPE" == "darwin"* ]]
   then
-    echo -e "\n${TXTCYAN}softwareupdate -i -a${TXTNORMAL}"
+    rich "softwareupdate -i -a" --rule --rule-style "green" --style "green"
     sudo softwareupdate -i -a
   fi
 }
