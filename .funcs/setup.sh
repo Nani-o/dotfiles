@@ -83,32 +83,32 @@ function install_pipx_packages () {
 }
 
 function update {
-  rich "update dotfiles" --rule --rule-style "green" --style "green"
+  rich "update dotfiles" --rule --rule-style "blue" --style "blue"
   dot update
-  rich "omz update" --rule --rule-style "green" --style "green"
+  rich "omz update" --rule --rule-style "blue" --style "blue"
   omz update --unattended
   if exists brew
   then
-    rich "brew upgrade" --rule --rule-style "green" --style "green"
+    rich "brew upgrade" --rule --rule-style "blue" --style "blue"
     brew upgrade
   fi
   if exists pipx
   then
-    rich "pipx upgrade-all" --rule --rule-style "green" --style "green"
+    rich "pipx upgrade-all" --rule --rule-style "blue" --style "blue"
     pipx upgrade-all
   fi
   if [[ -f /etc/debian_version ]]
   then
-    rich "apt update" --rule --rule-style "green" --style "green"
+    rich "apt update" --rule --rule-style "blue" --style "blue"
     sudo apt -y update
-    rich "apt upgrade" --rule --rule-style "green" --style "green"
+    rich "apt upgrade" --rule --rule-style "blue" --style "blue"
     sudo apt -y upgrade
-    rich "apt autoremove" --rule --rule-style "green" --style "green"
+    rich "apt autoremove" --rule --rule-style "blue" --style "blue"
     sudo apt -y autoremove
   fi
   if [[ "$OSTYPE" == "darwin"* ]]
   then
-    rich "softwareupdate -i -a" --rule --rule-style "green" --style "green"
+    rich "softwareupdate -i -a" --rule --rule-style "blue" --style "blue"
     sudo softwareupdate -i -a
   fi
 }
