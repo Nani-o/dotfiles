@@ -19,11 +19,16 @@ Ansible offers the loop, with_<lookup>, and until keywords to execute a task mul
 ### Iterating over a dictionary
 
 ```YAML
-- name: Register loop output as a variable
-  ansible.builtin.shell: "echo {{ item }}"
-  loop:
-    - "one"
-    - "two"
+- name: Add or remove several users
+  ansible.builtin.user:
+    name: "{{ item.key }}"
+    state: "{{ item.value }}"
+    groups: "wheel"
+  loop: "{{ my_dict | dict2items }}"
   register: echo
+  vars:
+    users:
+      sjobs: "absent"
+      swozniak: "present"
 ```
 

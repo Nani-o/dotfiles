@@ -1,6 +1,6 @@
 # Open file in editor
 
-function s {
+function f {
     FILES_PATH="."
     if [[ -d "$1" ]]; then
         FILES_PATH="$(cd "$1" && pwd)"
@@ -9,7 +9,7 @@ function s {
         return
     fi
 
-    FILE_TO_OPEN="$(find "$FILES_PATH" -type f -not -path '*/\.*' | \
+    FILE_TO_OPEN="$(fd "$FILES_PATH" --type f | \
         fzf --reverse --preview 'bat --color=always {}' --preview-window down:85%)"
     [[ -f "$FILE_TO_OPEN" ]] && $EDITOR "$FILE_TO_OPEN"
 }

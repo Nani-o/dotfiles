@@ -16,6 +16,8 @@ function sheets {
   esac
 }
 
+alias s=sheets
+
 function __sheets_new {
     echo -n "How do you want to name these file : "
     read FILE
@@ -24,8 +26,8 @@ function __sheets_new {
         echo "Already exists"
     else
         [[ "$FILE" == *.md ]] \
-          && nano "~/.dotfiles/.cheatsheets/$FILE" \
-          || nano "~/.dotfiles/.cheatsheets/$FILE".md
+          && "$EDITOR" ~/.dotfiles/.cheatsheets/"${FILE}" \
+          || "$EDITOR" ~/.dotfiles/.cheatsheets/"${FILE}".md
         dot link
     fi
 }
@@ -54,6 +56,6 @@ function __sheets {
 
     if [[ ! -z "$sheet_file" ]]
     then
-        nano $(__file_from_title "$sheet_file")
+        "$EDITOR" $(__file_from_title "$sheet_file")
     fi
 }
