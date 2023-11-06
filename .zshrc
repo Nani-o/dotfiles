@@ -48,6 +48,8 @@ export CONTEXT_BACKGROUND=014
 
 [[ -n "$VSCODE_PROXY_URI" ]] && source ~/.p10k-vscode.zsh || source ~/.p10k.zsh
 
+plugins=(pass)
+
 source $ZSH/oh-my-zsh.sh
 
 # Load functions and customs
