@@ -12,6 +12,10 @@ function dot {
   push)
     __dot_push
     ;;
+  git)
+    shift
+    git -C ~/.dotfiles "$@"
+    ;;
   link)
     ~/.dotfiles/symlinks.sh
     ;;
@@ -35,6 +39,7 @@ Theses are dot subcommands:
   status:   show the git status of dotfiles
   commit:   commit the local changes of dotfiles
   push:     push the local changes of dotfiles
+  git:      run git command in dotfiles
   help:     show this help message
   reload:   reload zsh"
 }
