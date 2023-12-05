@@ -3,6 +3,10 @@ alias rto='press_to_reload -t 300 travis_overview'
 alias lg='lazygit'
 alias lzd='lazydocker'
 
+# Gron
+alias norg='gron --ungron'
+alias ungron='gron --ungron'
+
 if [[ "${OSTYPE}" == *"darwin"* ]]; then
   alias find='gfind'
 fi
