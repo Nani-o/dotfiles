@@ -89,6 +89,8 @@ function update {
   omz update --unattended
   if exists brew
   then
+    rich "brew update" --rule --rule-style "blue" --style "blue"
+    brew update
     rich "brew upgrade" --rule --rule-style "blue" --style "blue"
     brew upgrade
   fi
