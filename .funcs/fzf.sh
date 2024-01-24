@@ -32,7 +32,7 @@ then
         sqlite3 "${sqlite_db}" "CREATE TABLE IF NOT EXISTS d (path TEXT UNIQUE, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP);"
         sqlite3 "${sqlite_db}" "INSERT OR REPLACE INTO d (path) VALUES ('${PWD}');"
     }
-    
+
     typeset -gaU chpwd_functions
     chpwd_functions+=add_folder_for_d
 
@@ -45,7 +45,7 @@ then
         PREVIEW_COMMAND="tree -L 1 -C {}"
         cd "$(echo "${RECENT_FOLDERS}" | \
                 sed 's/[0-9]*[[:space:]]//' | \
-                xargs -I {} -P 1 bash -c 'echo {}' | \
+                xargs -I {} -P 1 zsh -c 'echo {}' | \
                 fzf --layout=reverse --preview-window down:"${PREVIEW_WINDOW_SIZE}" --preview="${PREVIEW_COMMAND}")" || return
     }
 fi
