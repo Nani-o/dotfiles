@@ -27,10 +27,19 @@ function h {
 
 if which fzf > /dev/null
 then
+    add_folder_for_d() {
+        sqlite_db="${HOME}/.local/d.db"
+        sqlite3 "${sqlite_db}" "CREATE TABLE IF NOT EXISTS d (path TEXT UNIQUE, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP);"
+        sqlite3 "${sqlite_db}" "INSERT OR REPLACE INTO d (path) VALUES ('${PWD}');"
+    }
+    
+    typeset -gaU chpwd_functions
+    chpwd_functions+=add_folder_for_d
+
     unalias d 2> /dev/null
     unset -f d 2> /dev/null
     function d {
-        RECENT_FOLDERS=$(dirs -v | sed '1d')
+        RECENT_FOLDERS=$(sqlite3 ~/.local/d.db "select path from d ORDER BY timestamp DESC;" | sed '1d')
         NB_RECENT_FOLDERS=$(echo "${RECENT_FOLDERS}" | wc -l)
         PREVIEW_WINDOW_SIZE=$(($(tput lines)-NB_RECENT_FOLDERS-4))
         PREVIEW_COMMAND="tree -L 1 -C {}"
