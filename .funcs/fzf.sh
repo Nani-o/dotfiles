@@ -17,7 +17,7 @@ function f {
 # History search
 
 function h {
-    COMMAND=($(history | sed -E 's/^\ *[0-9]*\ *([0-9]*\/){2}[0-9]{4}\ [0-9]{2}:[0-9]{2}\ *//g' | tac | fzf --layout=reverse))
+    COMMAND=($(history | sed -E 's/^\ *[0-9]*\ *//g' | tac | fzf --layout=reverse))
     clear
     echo "${TXTCYAN}Executing${TXTNORMAL} :" "${COMMAND[@]}"
     eval "${COMMAND[@]}" # ${=COMMAND}  # Zsh word splitting see : http://zsh.sourceforge.net/FAQ/zshfaq03.html
@@ -39,12 +39,11 @@ then
     unalias d 2> /dev/null
     unset -f d 2> /dev/null
     function d {
-        RECENT_FOLDERS=$(sqlite3 ~/.local/d.db "select path from d ORDER BY timestamp DESC;" | sed '1d')
+        RECENT_FOLDERS=$(sqlite3 ~/.local/d.db "select path from d ORDER BY timestamp DESC;" | grep -v "^${PWD}$")
         NB_RECENT_FOLDERS=$(echo "${RECENT_FOLDERS}" | wc -l)
         PREVIEW_WINDOW_SIZE=$(($(tput lines)-NB_RECENT_FOLDERS-4))
         PREVIEW_COMMAND="tree -L 1 -C {}"
         cd "$(echo "${RECENT_FOLDERS}" | \
-                sed 's/[0-9]*[[:space:]]//' | \
                 xargs -I {} -P 1 zsh -c 'echo {}' | \
                 fzf --layout=reverse --preview-window down:"${PREVIEW_WINDOW_SIZE}" --preview="${PREVIEW_COMMAND}")" || return
     }
