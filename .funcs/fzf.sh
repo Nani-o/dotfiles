@@ -44,7 +44,6 @@ then
         PREVIEW_WINDOW_SIZE=$(($(tput lines)-NB_RECENT_FOLDERS-4))
         PREVIEW_COMMAND="tree -L 1 -C {}"
         cd "$(echo "${RECENT_FOLDERS}" | \
-                xargs -I {} -P 1 zsh -c 'echo {}' | \
                 fzf --layout=reverse --preview-window down:"${PREVIEW_WINDOW_SIZE}" --preview="${PREVIEW_COMMAND}")" || return
     }
 fi
