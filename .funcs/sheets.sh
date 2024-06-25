@@ -61,7 +61,7 @@ function __file_from_title {
 
 function __preview_sheets_from_title {
     file=$(echo "$1" | sed 's@\ *|\ *@_@' | sed 's/\ /_/g')
-    [[ "$COLUMNS" -gt $(($LINES*2)) ]] && width=$(echo $(($COLUMNS*0.7-5)) | cut -d "." -f 1)
+    [[ "$COLUMNS" -gt $(($LINES*2)) ]] && width=$(echo $(($COLUMNS/100*70-5)) | cut -d "." -f 1)
     [[ "$COLUMNS" -le $((LINES*2)) ]] && width=$(echo $(($COLUMNS-5)) | cut -d "." -f 1)
     rich -w $width ~/.cheatsheets/"$file".md --force-terminal
 }
@@ -71,7 +71,7 @@ function __sheets {
     [[ "$COLUMNS" -le $((LINES*2)) ]] && preview_windows=down,90%
     sheets_list=$(fd . ~/.cheatsheets -e md | sed 's/.*.cheatsheets\///g' | sed 's@_@ | @' | column -t | sed 's/_/ /g' | sed 's/.md$//g')
     sheet_file=$(echo "$sheets_list" | fzf --layout=reverse --preview "source ~/.funcs/sheets.sh;__preview_sheets_from_title {}" \
-                              --preview-window $preview_windows --ansi --no-scrollbar)
+                              --preview-window $preview_windows --ansi)
 
     if [[ ! -z "$sheet_file" ]]
     then
