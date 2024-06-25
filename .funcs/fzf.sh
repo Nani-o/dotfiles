@@ -27,10 +27,16 @@ function h {
 
 if which fzf > /dev/null
 then
+    function remove_deleted_folders_from_d {
+        sqlite_db="${HOME}/.local/d.db"
+        [[ ! -d "$1" ]] && sqlite3 "${sqlite_db}" "DELETE FROM d WHERE path='${1}';"
+    }
+
     add_folder_for_d() {
         sqlite_db="${HOME}/.local/d.db"
         sqlite3 "${sqlite_db}" "CREATE TABLE IF NOT EXISTS d (path TEXT UNIQUE, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP);"
         sqlite3 "${sqlite_db}" "INSERT OR REPLACE INTO d (path) VALUES ('${PWD}');"
+        FUNCS=$(functions remove_deleted_folders_from_d);sqlite3 "${sqlite_db}" "select path from d ORDER BY timestamp DESC;" | xargs -I{} zsh -c "eval $FUNCS; remove_deleted_folders_from_d {}"
     }
 
     typeset -gaU chpwd_functions
