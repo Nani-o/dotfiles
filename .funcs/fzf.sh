@@ -36,7 +36,10 @@ then
         sqlite_db="${HOME}/.local/d.db"
         sqlite3 "${sqlite_db}" "CREATE TABLE IF NOT EXISTS d (path TEXT UNIQUE, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP);"
         sqlite3 "${sqlite_db}" "INSERT OR REPLACE INTO d (path) VALUES ('${PWD}');"
-        FUNCS=$(functions remove_deleted_folders_from_d);sqlite3 "${sqlite_db}" "select path from d ORDER BY timestamp DESC;" | xargs -I{} zsh -c "eval $FUNCS; remove_deleted_folders_from_d {}"
+        while read -r folder
+        do
+            remove_deleted_folders_from_d "$folder"
+        done <<< "$(sqlite3 "${sqlite_db}" "select path from d ORDER BY timestamp DESC;")"
     }
 
     typeset -gaU chpwd_functions
