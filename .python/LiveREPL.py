@@ -14,6 +14,7 @@ from prompt_toolkit.key_binding import KeyBindings
 from prompt_toolkit.formatted_text import HTML, ANSI
 from prompt_toolkit.history import InMemoryHistory
 from termcolor import colored
+from queue import Queue, Empty
 
 import sys
 
@@ -22,7 +23,8 @@ class LiveREPL:
     """Main application class for the Live REPL terminal app"""
     def __init__(self, commands):
         self.commands = commands
-        self.output_text = ANSI("")
+        self.process_mode = "repl"
+        self.output_text = ANSI("\n" * 9)
         self.dashboard_text = ANSI("")
         self.buffer = Buffer(history=InMemoryHistory(), enable_history_search=True, completer=None, multiline=False, accept_handler=self.process_command)
         self.prompt = BeforeInput("> ")
@@ -76,9 +78,9 @@ class LiveREPL:
             HSplit([
                 self.dashboard_area,  # Dashboard area (dynamic)
                 self.separator,       # Separator (1 line)
-                self.textinput_area,  # REPL area (1 line)
-                self.separator,       # Separator (1 line)
                 self.output_area,     # Output area (10 lines)
+                self.separator,       # Separator (1 line)
+                self.textinput_area,  # REPL area (1 line)
             ])
         )
     
@@ -88,8 +90,12 @@ class LiveREPL:
         
         @self.kb.add('c-c')
         def _(event):
-            """Exit on Ctrl+C"""
-            event.app.exit()
+            """Cancel command on Ctrl+C"""
+            if self.process_mode == "form":
+                self.switch_mode()
+            else:
+                self.buffer.text = ""
+                self.app.invalidate()
         
         @self.kb.add('c-q')
         def _(event):
@@ -105,19 +111,72 @@ class LiveREPL:
         )
     
     def process_command(self, buffer):
+        if self.process_mode == "repl":
+            return self.process_command_repl(buffer)
+        else:
+            return self.process_command_form(buffer)
+    
+    def process_command_repl(self, buffer):
         input = self.buffer.text.strip().split(' ')
         command = input[0]
         args = input[1:]
-        if command in self.commands:
-            result = self.commands[command](*args)
+        if cmd in self.commands:
+            self.command = self.commands[cmd]
+            self.command_name = cmd
+            if 'form' in self.command:
+                self.buffer.append_to_history()
+                self.switch_mode(self.command['form'])
+                self.app.invalidate()
+                return True
+            else: 
+                result = self.commands[cmd]['method'](*args)
         else:
             result = colored("Command not found", "red")
 
-        self.output_text = ANSI("> {}\n{}\n{}".format(self.buffer.text, result, self.output_text.value))
+        self.output_text = ANSI("{}\n> {}\n{}".format(self.output_text.value.split('\n', 2)[-1], self.buffer.text, result))
         self.buffer.append_to_history()
-        # self.output_text = buffer.text + "\n" + self.output_text
         self.app.invalidate()  # Refresh the display
         return False
+
+    def process_command_form(self, buffer):
+    input = self.buffer.text.strip()
+    self.answers[self.prompt.text.strip('> ').strip(' : ')] = input
+    try:
+        value, default = self.form_queue.get_nowait()
+        self.prompt.text = "> {} : ".format(value)
+        self.buffer.text = ""
+        self.buffer.insert_text(default)
+        self.app.invalidate()
+        return True
+    except Empty:
+        result = self.command['method'](self.answers)
+        self.output_text = ANSI("{}\n> {}\n{}".format(self.output_text.value.split('\n', 2)[-1], self.command_name, result))
+        self.buffer.append_to_history()
+        self.app.invalidate()
+        self.switch_mode()
+        return False
+        
+    def switch_mode(self, *args):
+        if self.process_mode == "repl":
+            self.last_prompt = self.prompt.text
+            self.process_mode = "form"
+            self.form_queue = Queue()
+            
+            for key, default in args[0].items():
+                self.form_queue.put((key, default))
+            value, default = self.form_queue.get()
+            self.prompt.text = "> {} : ".format(value)
+            self.buffer.text = ""
+            self.buffer.insert_text(default)
+            self.answers = {}
+        elif self.process_mode == "form":
+            self.prompt.text = self.last_prompt
+            self.process_mode = "repl"
+            self.form_queue = None
+            self.send_form_method = None
+            self.command_name = ""
+            
+            self.answers = {}
 
     def run(self):
         """Run the application"""
