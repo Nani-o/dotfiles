@@ -118,7 +118,7 @@ class LiveREPL:
     
     def process_command_repl(self, buffer):
         input = self.buffer.text.strip().split(' ')
-        command = input[0]
+        cmd = input[0]
         args = input[1:]
         if cmd in self.commands:
             self.command = self.commands[cmd]
@@ -139,22 +139,22 @@ class LiveREPL:
         return False
 
     def process_command_form(self, buffer):
-    input = self.buffer.text.strip()
-    self.answers[self.prompt.text.strip('> ').strip(' : ')] = input
-    try:
-        value, default = self.form_queue.get_nowait()
-        self.prompt.text = "> {} : ".format(value)
-        self.buffer.text = ""
-        self.buffer.insert_text(default)
-        self.app.invalidate()
-        return True
-    except Empty:
-        result = self.command['method'](self.answers)
-        self.output_text = ANSI("{}\n> {}\n{}".format(self.output_text.value.split('\n', 2)[-1], self.command_name, result))
-        self.buffer.append_to_history()
-        self.app.invalidate()
-        self.switch_mode()
-        return False
+        input = self.buffer.text.strip()
+        self.answers[self.prompt.text.strip('> ').strip(' : ')] = input
+        try:
+            value, default = self.form_queue.get_nowait()
+            self.prompt.text = "> {} : ".format(value)
+            self.buffer.text = ""
+            self.buffer.insert_text(default)
+            self.app.invalidate()
+            return True
+        except Empty:
+            result = self.command['method'](self.answers)
+            self.output_text = ANSI("{}\n> {}\n{}".format(self.output_text.value.split('\n', 2)[-1], self.command_name, result))
+            self.buffer.append_to_history()
+            self.app.invalidate()
+            self.switch_mode()
+            return False
         
     def switch_mode(self, *args):
         if self.process_mode == "repl":
