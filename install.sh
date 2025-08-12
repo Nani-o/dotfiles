@@ -12,6 +12,12 @@ REPO_URL="https://github.com/romkatv/powerlevel10k"
 [[ -d "$REPO_PATH" ]] \
   || git clone "$REPO_URL" "$REPO_PATH"
 
+REPO_PATH=~/.nano
+REPO_URL="https://github.com/scopatz/nanorc.git"
+
+[[ -d "$REPO_PATH" ]] \
+  || git clone "$REPO_URL" "$REPO_PATH"
+
 REPO_PATH=~/.dotfiles
 REPO_URL="https://github.com/Nani-o/dotfiles"
 
