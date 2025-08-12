@@ -25,6 +25,9 @@ function dot {
   help)
     __dot_help
     ;;
+  '')
+    __dot_help
+    ;;
   *)
     echo -e "dot: '$1' is not a valid subcommand.\n"
     __dot_help
