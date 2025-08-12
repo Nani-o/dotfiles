@@ -86,7 +86,7 @@ function update {
   rich "update dotfiles" --rule --rule-style "blue" --style "blue"
   dot update
   rich "omz update" --rule --rule-style "blue" --style "blue"
-  omz update --unattended
+  omz update
   if exists brew
   then
     rich "brew update" --rule --rule-style "blue" --style "blue"
