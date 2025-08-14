@@ -59,10 +59,10 @@ export HOSTNAME="$(hostname | tr '[:upper:]' '[:lower:]')"
 export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
-export CONTEXT_BACKGROUND=014
-[[ ${HOSTNAME} == "mizuho"* ]] && export CONTEXT_BACKGROUND=014
-[[ ${HOSTNAME} == "pi"* ]] && export CONTEXT_BACKGROUND=002
-[[ ${HOSTNAME} == "dedinani"* ]] && export CONTEXT_BACKGROUND=001
+export CONTEXT_BACKGROUND=002
+OS_FLAVOR=$(uname)
+[[ ${OS_FLAVOR} == "Darwin" ]] && export CONTEXT_BACKGROUND=014
+[[ ${OS_FLAVOR} == "Linux" ]] && export CONTEXT_BACKGROUND=001
 
 [[ -n "$VSCODE_PROXY_URI" ]] && source ~/.p10k-vscode.zsh || source ~/.p10k.zsh
 
