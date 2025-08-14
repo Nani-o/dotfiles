@@ -33,13 +33,6 @@ function setup_workstation {
     brew bundle --file=$HOME/.dotfiles/Brewfile
     rm -rf $HOME/.dotfiles/Brewfile.lock.json
 
-    # Install pipx
-    if ! exists pipx; then
-        echo "[pip3] Installing pipx..."
-        pip3 install pipx
-    else
-        echo "[pip3] pipx is already installed"
-    fi
     install_ansible
 
     pipx_packages=(
