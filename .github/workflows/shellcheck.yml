@@ -18,7 +18,7 @@ jobs:
     - name: Send Telegram Message using curl
       if: always()
       run: |
-        [[ "${{ job.status }}" == "success" ]] && STATUS="🔵" || STATUS="🔴"
+        [[ "${{ job.status }}" == "success" ]] && STATUS="❌" || STATUS="✅"
         REPOSITORY=$( echo ${{ github.repository }} | cut -d '/' -f 2 )
         MESSAGE="\`\`\`
         action         : Dotfiles checks
