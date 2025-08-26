@@ -36,7 +36,6 @@ function setup_workstation {
     install_ansible
 
     pipx_packages=(
-        rich
         httpie
     )
 
@@ -76,34 +75,35 @@ function install_pipx_packages () {
 }
 
 function update {
-  rich "update dotfiles" --rule --rule-style "blue" --style "blue"
-  dot update
-  rich "omz update" --rule --rule-style "blue" --style "blue"
-  omz update
+  separator "update dotfiles"
+  dot update --no-reload
+  separator "omz update"
+  "$ZSH/tools/upgrade.sh"
   if exists brew
   then
-    rich "brew update" --rule --rule-style "blue" --style "blue"
+    separator "brew update"
     brew update
-    rich "brew upgrade" --rule --rule-style "blue" --style "blue"
+    separator "brew upgrade"
     brew upgrade
   fi
   if exists pipx
   then
-    rich "pipx upgrade-all" --rule --rule-style "blue" --style "blue"
+    separator "pipx upgrade-all"
     pipx upgrade-all
   fi
   if [[ -f /etc/debian_version ]]
   then
-    rich "apt update" --rule --rule-style "blue" --style "blue"
+    separator "apt update"
     sudo apt -y update
-    rich "apt upgrade" --rule --rule-style "blue" --style "blue"
+    separator "apt upgrade"
     sudo apt -y upgrade
-    rich "apt autoremove" --rule --rule-style "blue" --style "blue"
+    separator "apt autoremove"
     sudo apt -y autoremove
   fi
   if [[ "$OSTYPE" == "darwin"* ]]
   then
-    rich "softwareupdate -i -a" --rule --rule-style "blue" --style "blue"
+    separator "softwareupdate -i -a"
     sudo softwareupdate -i -a
   fi
+  dot reload
 }

@@ -283,3 +283,14 @@ function video2gif {
 function remove_blank_lines {
     sed -i '/^[[:space:]]*$/d' "$1"
 }
+
+function separator {
+    MESSAGE="$1"
+    LEN_MESSAGE=${#MESSAGE}
+    TERM_WIDTH=$(tput cols)
+    LEN_LINE=$(( (TERM_WIDTH - LEN_MESSAGE - 2) / 2 ))
+    [[ $(( (TERM_WIDTH - LEN_MESSAGE) % 2 )) -ne 0 ]] && LEN_LINE_RIGHT=$(( LEN_LINE + 1 )) || LEN_LINE_RIGHT=$LEN_LINE
+    echo -n "${TXTBOLD}${TXTCYAN}"
+    printf '━%.0s' {1..$LEN_LINE} && printf " %s " "$MESSAGE" && printf '━%.0s' {1..$LEN_LINE_RIGHT}
+    echo "${TXTNORMAL}"
+}

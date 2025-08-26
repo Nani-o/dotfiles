@@ -1,7 +1,7 @@
 function dot {
   case $1 in
   update|pull)
-    __dot_pull
+    __dot_pull "$2"
     ;;
   status)
     git -C ~/.dotfiles status
@@ -58,7 +58,7 @@ function __dot_pull {
   if [[ "$BEFORE" != "$AFTER" ]]
   then
     ~/.dotfiles/symlinks.sh
-    __dot_reload
+    [[ "$1" != "--no-reload" ]] && __dot_reload
   fi
 }
 
