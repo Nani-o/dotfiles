@@ -63,7 +63,7 @@ export CONTEXT_BACKGROUND=002
 OS_FLAVOR=$(uname)
 [[ ${OS_FLAVOR} == "Darwin" ]] && export CONTEXT_BACKGROUND=014
 [[ ${OS_FLAVOR} == "Linux" ]] && export CONTEXT_BACKGROUND=001
-
+[[ -f "/etc.defaults/VERSION" ]] && export CONTEXT_BACKGROUND=003
 [[ -n "$VSCODE_PROXY_URI" ]] && source ~/.p10k-vscode.zsh || source ~/.p10k.zsh
 
 plugins=(pass)
