@@ -50,6 +50,7 @@ function install_ansible () {
     )
     # shellcheck disable=SC2068
     install_pipx_packages ${ansible_pipx_packages[@]}
+    pipx inject ansible-core ansible
 }
 
 function setup_wsl () {
