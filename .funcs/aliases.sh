@@ -1,6 +1,6 @@
 # Aliases
 alias rto='press_to_reload -t 300 travis_overview'
-alias lg='lazygit'
+alias lg='lazygit -ucf ~/.config/lazygit/config.yml'
 alias lzd='lazydocker'
 
 # Gron
