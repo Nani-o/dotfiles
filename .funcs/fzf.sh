@@ -35,7 +35,8 @@ then
     add_folder_for_d() {
         sqlite_db="${HOME}/.local/d.db"
         sqlite3 "${sqlite_db}" "CREATE TABLE IF NOT EXISTS d (path TEXT UNIQUE, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP);"
-        sqlite3 "${sqlite_db}" "INSERT OR REPLACE INTO d (path) VALUES ('${PWD}');"
+        request='INSERT OR REPLACE INTO d (path) VALUES ("'${PWD}'");'
+        sqlite3 "${sqlite_db}" "${request}"
         while read -r folder
         do
             remove_deleted_folders_from_d "$folder"
