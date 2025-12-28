@@ -76,4 +76,6 @@ for file in ~/.funcs/* ; do
     . "$file"
   fi
 done
-[[ -f ~/.extras.sh ]] && source ~/.extras.sh
+if [ -f ~/.extras.sh ] ; then
+    source ~/.extras.sh
+fi
