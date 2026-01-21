@@ -59,7 +59,7 @@ function watchnrun {
     shift
     RUN=("${@}")
     HASH=""
-    if type gflou >/dev/null 2>&1; then
+    if type gfind >/dev/null 2>&1; then
       FIND_BIN=gfind
     else
       FIND_BIN=find
@@ -233,7 +233,7 @@ function dshell {
         tmux kill-session -t $session
     fi
     tmux new-session -s $session -n $session -d "zsh -c \"cd $pwd; source ~/.zshrc ; touch dshell.sh ; nano dshell.sh ; rm dshell.sh\""
-    tmux split-window -d -h -p 40 -t $session "zsh -c \"cd $pwd; source ~/.zshrc ; watchnrun dshell.sh zsh dshell.sh\""
+    tmux split-window -d -v -p 40 -t $session "zsh -c \"cd $pwd; source ~/.zshrc ; watchnrun dshell.sh zsh dshell.sh\""
 
     tmux attach-session -t $session
 }
