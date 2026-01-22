@@ -106,5 +106,5 @@ function update {
     separator "softwareupdate -i -a"
     sudo softwareupdate -i -a
   fi
-  dot reload
+  [[ "$1" != "--no-reload" ]] && dot reload
 }
