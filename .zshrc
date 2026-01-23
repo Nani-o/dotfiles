@@ -30,14 +30,10 @@ setopt HIST_BEEP                 # Beep when accessing nonexistent history.
 
 # Editor
 export EDITOR="$(which nano)"
-if [[ -f '/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl' ]];
+if [[ -f '/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code' ]];
 then
-    export EDITOR='/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl'
-    alias subl='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
-elif [[ -f '/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code' ]];
-then
-    export EDITOR='/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code'
-    alias code='/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code'
+    export EDITOR='/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code'
+    alias code='/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code'
 elif [[ -f '/mnt/c/Users/Nani/AppData/Local/Programs/Microsoft VS Code/bin/code' ]];
 then
     export EDITOR='/mnt/c/Users/Nani/AppData/Local/Programs/Microsoft VS Code/bin/code'
