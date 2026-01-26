@@ -70,7 +70,7 @@ function __preview_sheets_from_title {
 
 function __sheets {
     [[ "$COLUMNS" -gt $(($LINES*2)) ]] && preview_windows=right,70%
-    [[ "$COLUMNS" -le $((LINES*2)) ]] && preview_windows=down,90%
+    [[ "$COLUMNS" -le $((LINES*2)) ]] && preview_windows=top,80%
     sheets_list=$(fd . ~/.cheatsheets -e md | sed 's/.*.cheatsheets\///g' | sed 's@_@ | @' | column -t | sed 's/_/ /g' | sed 's/.md$//g')
     sheet_file=$(echo "$sheets_list" | fzf --layout=reverse --preview "source ~/.funcs/sheets.sh;__preview_sheets_from_title {}" \
                               --preview-window $preview_windows --ansi)
