@@ -32,7 +32,7 @@ setopt HIST_BEEP                 # Beep when accessing nonexistent history.
 export EDITOR="$(which nano)"
 if [[ -f '/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code' ]];
 then
-    export EDITOR='/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code'
+    export EDITOR='code'
     alias code='/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code'
 elif [[ -f '/mnt/c/Users/Nani/AppData/Local/Programs/Microsoft VS Code/bin/code' ]];
 then
