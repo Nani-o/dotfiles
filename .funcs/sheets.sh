@@ -28,9 +28,9 @@ function __sheets_new {
     then
         echo "Already exists"
     else
-        [[ "$FILE" == *.md ]] \
-          && "$EDITOR" ~/.dotfiles/.cheatsheets/"${FILE}" \
-          || "$EDITOR" ~/.dotfiles/.cheatsheets/"${FILE}".md
+        [[ "$FILE" == *.md ]] || FILE="${FILE}.md"
+        touch ~/.dotfiles/.cheatsheets/"${FILE}"
+        "$EDITOR" ~/.dotfiles/.cheatsheets/"${FILE}"
         dot link
     fi
 }
@@ -52,6 +52,8 @@ function __sheets_help {
     echo -e "usage: sheets [subcommand]\n
 Theses are sheets subcommands:
   help:     show this help message"
+  new:      create a new cheatsheet in the dotfiles repo
+  local_new: create a new local cheatsheet
 }
 
 function __file_from_title {
