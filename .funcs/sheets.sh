@@ -63,8 +63,8 @@ function __file_from_title {
 
 function __preview_sheets_from_title {
     file=$(echo "$1" | sed 's@\ *|\ *@_@' | sed 's/\ /_/g')
-    [[ "$COLUMNS" -gt $(($LINES*2)) ]] && width=$(echo $(($COLUMNS/100*70-5)) | cut -d "." -f 1)
-    [[ "$COLUMNS" -le $((LINES*2)) ]] && width=$(echo $(($COLUMNS-5)) | cut -d "." -f 1)
+    [[ "$COLUMNS" -gt $(($LINES*2)) ]] && width=$(echo "$COLUMNS/100*70-5" | bc -l | cut -d "." -f 1)
+    [[ "$COLUMNS" -le $((LINES*2)) ]] && width=$(echo $COLUMNS-5 | bc -l | cut -d "." -f 1)
     rich -w $width ~/.cheatsheets/"$file".md --force-terminal
 }
 
