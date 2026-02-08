@@ -51,6 +51,9 @@ export LANG="en_US.UTF-8"
 # Make sure HOSTNAME is lowercase
 export HOSTNAME="$(hostname | tr '[:upper:]' '[:lower:]')"
 
+# For pinentry
+export GPG_TTY=$(tty)
+
 # Oh My Zsh
 export ZSH="$HOME/.oh-my-zsh"
 
