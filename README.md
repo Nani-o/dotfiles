@@ -5,11 +5,6 @@ My dotfiles
 
 Keeping track of my dotfiles in a git repo after seeing [geerlingguy](https://github.com/geerlingguy/dotfiles) one's.
 
-Travis
-------
-
-I use a simple .travis.yml for running shellcheck on my shell functions file and some generic checks like tabulations or trailing characters.
-
 Using
 -----
 
