@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Nani-o/dotfiles.svg?branch=master)](https://travis-ci.org/Nani-o/dotfiles)
+[![Checks our dotfiles](https://github.com/Nani-o/dotfiles/actions/workflows/shellcheck.yml/badge.svg)](https://github.com/Nani-o/dotfiles/actions/workflows/shellcheck.yml)
 
 My dotfiles
 ===========
