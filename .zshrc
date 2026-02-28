@@ -49,7 +49,7 @@ export LC_CTYPE="en_US.UTF-8"
 export LANG="en_US.UTF-8"
 
 # Make sure HOSTNAME is lowercase
-export HOSTNAME="$(hostname | tr '[:upper:]' '[:lower:]')"
+export HOSTNAME="$(echo $HOSTNAME | tr '[:upper:]' '[:lower:]')"
 
 # For pinentry
 export GPG_TTY=$(tty)
