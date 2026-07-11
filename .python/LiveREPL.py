@@ -39,7 +39,7 @@ class LiveREPL:
 
     def setup_layout(self):
         """Create the three-section horizontal split layout"""
-        
+
         # Dashboard area for dynamic content (adapts to terminal size)
         self.dashboard_area = Window(
             content=FormattedTextControl(
@@ -47,7 +47,7 @@ class LiveREPL:
             ),
             wrap_lines=True,
         )
-        
+
         # Separator line (1 line height) - dynamic width
         self.separator = Window(
             content=FormattedTextControl(
@@ -83,11 +83,11 @@ class LiveREPL:
                 self.textinput_area,  # REPL area (1 line)
             ])
         )
-    
+
     def setup_key_bindings(self):
         """Setup key bindings for the application"""
         self.kb = KeyBindings()
-        
+
         @self.kb.add('c-c')
         def _(event):
             """Cancel command on Ctrl+C"""
@@ -96,12 +96,12 @@ class LiveREPL:
             else:
                 self.buffer.text = ""
                 self.app.invalidate()
-        
+
         @self.kb.add('c-q')
         def _(event):
             """Exit on Ctrl+Q"""
             event.app.exit()
-    
+
     def setup_application(self):
         """Create the main application"""
         self.app = Application(
@@ -109,13 +109,13 @@ class LiveREPL:
             key_bindings=self.kb,
             full_screen=True,
         )
-    
+
     def process_command(self, buffer):
         if self.process_mode == "repl":
             return self.process_command_repl(buffer)
         else:
             return self.process_command_form(buffer)
-    
+
     def process_command_repl(self, buffer):
         input = self.buffer.text.strip().split(' ')
         cmd = input[0]
@@ -128,7 +128,7 @@ class LiveREPL:
                 self.switch_mode(self.command['form'])
                 self.app.invalidate()
                 return True
-            else: 
+            else:
                 result = self.commands[cmd]['method'](*args)
         else:
             result = colored("Command not found", "red")
@@ -155,13 +155,13 @@ class LiveREPL:
             self.app.invalidate()
             self.switch_mode()
             return False
-        
+
     def switch_mode(self, *args):
         if self.process_mode == "repl":
             self.last_prompt = self.prompt.text
             self.process_mode = "form"
             self.form_queue = Queue()
-            
+
             for key, default in args[0].items():
                 self.form_queue.put((key, default))
             value, default = self.form_queue.get()
@@ -175,7 +175,7 @@ class LiveREPL:
             self.form_queue = None
             self.send_form_method = None
             self.command_name = ""
-            
+
             self.answers = {}
 
     def run(self):
@@ -184,7 +184,7 @@ class LiveREPL:
             self.app.run()
         except KeyboardInterrupt:
             pass
-    
+
     def get_separator_line(self):
         """Generate separator line that adapts to terminal width"""
         try:
@@ -194,5 +194,5 @@ class LiveREPL:
             width = shutil.get_terminal_size().columns
         except:
             width = 80
-        
+
         return HTML("<ansicyan>" + "─" * width + "</ansicyan>")

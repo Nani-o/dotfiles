@@ -1,9 +1,19 @@
-[![Checks our dotfiles](https://github.com/Nani-o/dotfiles/actions/workflows/shellcheck.yml/badge.svg)](https://github.com/Nani-o/dotfiles/actions/workflows/shellcheck.yml)
+[![Checks](https://github.com/Nani-o/dotfiles/actions/workflows/checks.yml/badge.svg)](https://github.com/Nani-o/dotfiles/actions/workflows/checks.yml)
 
 My dotfiles
 ===========
 
 Keeping track of my dotfiles in a git repo after seeing [geerlingguy](https://github.com/geerlingguy/dotfiles) one's.
+
+Checks
+------
+
+I use a GitHub Actions workflow for syntax checks and repository hygiene.
+The same checks can be run locally:
+
+```Shell
+scripts/check.sh
+```
 
 Using
 -----
