@@ -56,6 +56,7 @@ export GPG_TTY=$(tty)
 
 # Oh My Zsh
 export ZSH="$HOME/.oh-my-zsh"
+zstyle ':omz:update' mode disabled
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 export CONTEXT_BACKGROUND=002
