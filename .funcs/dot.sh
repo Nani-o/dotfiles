@@ -167,7 +167,7 @@ function __dot_update {
     separator "apt update"
     sudo apt -y update
     separator "apt upgrade"
-    sudo apt -y upgrade
+    sudo apt -y --allow-downgrades upgrade
     separator "apt autoremove"
     sudo apt -y autoremove
   fi
