@@ -155,7 +155,7 @@ function __dot_update {
     separator "brew update"
     brew update
     separator "brew upgrade"
-    brew upgrade
+    brew upgrade -y
   fi
   if __dot_exists pipx
   then
