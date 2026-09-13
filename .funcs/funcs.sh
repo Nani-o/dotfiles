@@ -225,6 +225,10 @@ function device_as_screen {
 
 # Tmux
 
+function tmux_session {
+    tmux attach -t "${1}" || tmux new -s "${1}"
+}
+
 function dshell {
     session="dshell"
     pwd=$(pwd)
