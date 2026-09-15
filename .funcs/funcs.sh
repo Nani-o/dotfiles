@@ -226,7 +226,10 @@ function device_as_screen {
 # Tmux
 
 function tmux_session {
-    tmux attach -t "${1}" || tmux new -s "${1}"
+    local session="${1}"
+    shift
+
+    tmux attach -t "${session}" || tmux new -s "${session}" "${@}"
 }
 
 function dshell {
