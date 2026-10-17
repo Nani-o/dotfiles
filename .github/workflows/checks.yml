@@ -23,7 +23,7 @@ jobs:
       - name: Install check dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y shellcheck zsh
+          sudo apt-get install -y shellcheck zsh python3 ripgrep fzf
 
       - name: Run checks
         run: scripts/check.sh

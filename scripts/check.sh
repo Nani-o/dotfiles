@@ -24,6 +24,9 @@ else
   echo "shellcheck not found; skipping"
 fi
 
+section "kb integration tests (disposable repositories)"
+python3 -B -m unittest discover -s tests -v
+
 check_pattern() {
   local label="$1"
   local pattern="$2"
