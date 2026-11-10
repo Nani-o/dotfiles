@@ -1,0 +1,5 @@
+# Cmd+D : séparation verticale, nouveau panneau à droite
+keybind = super+d=new_split:right
+
+# Cmd+Shift+D : séparation horizontale, nouveau panneau en dessous
+keybind = super+shift+d=new_split:down
